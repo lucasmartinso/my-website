@@ -22,13 +22,13 @@ export async function getProjects(req: Request, res: Response): Promise<void> {
 }  
 
 export async function getPinnedProjects(req: Request, res: Response): Promise<void> {
-    const projects: projectInfo[] = await projectService. ;
+    // const projects: projectInfo[] = await projectService. ;
 
-    res.status(200).send(projects);
+    // res.status(200).send(projects);
 }
 
 export async function getProjectInfo(req: Request, res: Response): Promise<void> {
-    const type: string = req.params.id;
+    const id: number = Number(req.params.id);
     // const projects: projectInfo[] = await projectService.getProjects(); 
     
     // res.status(200).send(projects);
