@@ -28,4 +28,10 @@ export async function getPinnedProjects(): Promise<projectInfo[]> {
     const projectsPinned: projectInfo[] = await projectRepository.getPinnedProjects(); 
 
     return projectsPinned;
-}
+} 
+
+export async function getProjectInfo(id: number): Promise<projectInfo> {
+    const projectInfos: projectInfo = await projectRepository.getProjectInfo(id); 
+
+    return projectInfos;
+} 

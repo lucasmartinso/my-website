@@ -38,9 +38,12 @@ export async function getPinnedProjects(): Promise<projectInfo[]> {
     return projects;
 } 
 
-export async function getProjectInfo(id: number) {
-    const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
+//concertar esse type any
+export async function getProjectInfo(id: number): Promise<projectInfo> {
+    const { rows: project }: any = await connection.query(`
         SELECT * FROM "project" 
         WHERE "id" = $1
     `,[id]);
+
+    return project;
 }
