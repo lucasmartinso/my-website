@@ -1,8 +1,8 @@
 import { Router } from "express"; 
-import gitRouter from "./gitHubRouter";
+import projectRouter from "./projectRouter";
 
 const router = Router(); 
 
-router.use(gitRouter); 
+router.use(projectRouter);
 
 export default router;
