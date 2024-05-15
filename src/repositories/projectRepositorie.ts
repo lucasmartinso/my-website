@@ -8,3 +8,12 @@ export async function addProject(project: projectInfo): Promise<void> {
         VALUES(${project.name},${project.type},${project.image},${project.description},${project.url},${project.documentation},${project.front},${project.back},${project.back})
     `); 
 } 
+
+export async function getProjects() {
+    const { rows: projects }: any = await connection.query(`
+        SELECT * FROM "projects"
+    `); 
+
+    console.log(projects);
+    return projects;
+}
