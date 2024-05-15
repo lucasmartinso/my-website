@@ -1,3 +1,4 @@
+import { QueryResult } from "pg";
 import connection from "../databases/postgres"; 
 import { projectInfo } from "../types/projectType";
 import dotenv from "dotenv";
@@ -11,11 +12,10 @@ export async function addProject(project: projectInfo): Promise<void> {
     `); 
 } 
 
-export async function getProjects(): Promise<any> {
-    const { rows: projects }: any = await connection.query(`
+export async function getProjects(): Promise<projectInfo[]> {
+    const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
         SELECT * FROM "project"
     `); 
 
-    console.log(projects);
     return projects;
 }
