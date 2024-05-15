@@ -1,5 +1,7 @@
 import connection from "../databases/postgres"; 
-import { projectInfo } from "../types/projectType"
+import { projectInfo } from "../types/projectType";
+import dotenv from "dotenv";
+dotenv.config();
 
 export async function addProject(project: projectInfo): Promise<void> {
     await connection.query(`
@@ -9,9 +11,9 @@ export async function addProject(project: projectInfo): Promise<void> {
     `); 
 } 
 
-export async function getProjects() {
+export async function getProjects(): Promise<any> {
     const { rows: projects }: any = await connection.query(`
-        SELECT * FROM "projects"
+        SELECT * FROM "project"
     `); 
 
     console.log(projects);

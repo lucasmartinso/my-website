@@ -13,8 +13,8 @@ export async function updateProjet() {
     
 } 
 
-export async function getProjects() { 
+export async function getProjects(): Promise<any> { 
     const projects = await projectRepositorie.getProjects();
 
-    return projects;
+    return "projects";
 }
