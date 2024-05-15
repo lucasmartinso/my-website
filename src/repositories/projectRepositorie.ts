@@ -20,20 +20,27 @@ export async function getProjects(): Promise<projectInfo[]> {
     return projects;
 } 
 
-export async function getProjectsType(type: string) {
+export async function getProjectsType(type: string): Promise<projectInfo[]> {
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
         SELECT * FROM "project"
-        WHERE "type" = 'web'
-    `); 
+        WHERE "type" = $1
+    `,[type]); 
 
     return projects;
 }
 
-export async function getPinnedProjects() { 
+export async function getPinnedProjects(): Promise<projectInfo[]> { 
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
         SELECT * FROM "project" 
         WHERE "pinned" = true
     `);
 
     return projects;
+} 
+
+export async function getProjectInfo(id: number) {
+    const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
+        SELECT * FROM "project" 
+        WHERE "id" = $1
+    `,[id]);
 }
