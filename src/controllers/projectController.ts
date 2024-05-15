@@ -16,6 +16,7 @@ export async function updateProjet(req: Request, res: Response): Promise<void> {
 
 export async function getProjects(req: Request, res: Response): Promise<void> { 
     const { type }: { type?: string | undefined } = req.query;
+    //console.log(typeof(type));
     const projects: projectInfo[] = await projectService.getProjects(type); 
 
     res.status(200).send(projects);

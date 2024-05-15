@@ -18,4 +18,22 @@ export async function getProjects(): Promise<projectInfo[]> {
     `); 
 
     return projects;
+} 
+
+export async function getProjectsType(type: string) {
+    const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
+        SELECT * FROM "project"
+        WHERE "type" = 'web'
+    `); 
+
+    return projects;
+}
+
+export async function getPinnedProjects() { 
+    const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
+        SELECT * FROM "project" 
+        WHERE "pinned" = true
+    `);
+
+    return projects;
 }

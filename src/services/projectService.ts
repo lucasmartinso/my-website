@@ -14,8 +14,12 @@ export async function updateProjet() {
     
 } 
 
-export async function getProjects(): Promise<projectInfo[]> { 
-    const projects: projectInfo[] = await projectRepositorie.getProjects();
-
-    return projects;
+export async function getProjects(type: string | undefined): Promise<projectInfo[]> { 
+    if(!type) { 
+        const projects: projectInfo[] = await projectRepositorie.getProjects();
+        return projects;
+    } else { 
+        const projects: projectInfo[] = await projectRepositorie.getProjects();
+        return projects;
+    }
 }
