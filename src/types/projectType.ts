@@ -10,7 +10,7 @@ export interface projectInfo {
     pinned: boolean;
 } 
 
-enum types { 
+export enum types { 
     web = "web", 
     notebook = "notebook"
 }
