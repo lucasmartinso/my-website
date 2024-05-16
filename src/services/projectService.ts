@@ -6,16 +6,12 @@ export async function getProjects(type: string | undefined): Promise<projectInfo
 
     if(!type) {
         projects = await projectRepository.getProjects();
+        if(!projects.length) throw { type: "Not Found", message:"Nenhum projeto encontrado na base de dados"}
     } else { 
-        console.log("OIII");
-        if(type !== 'web' && type !== 'notebook') { 
-            console.log("AQUIIII");
-            throw { type: "Not Found", message:"None projects registred with that type"} 
-        }
+        if(type !== 'web' && type !== 'notebook') throw { type: "Unprocessable Entity", message:"Tipo inexistente"} 
         projects = await projectRepository.getProjectsType(type);
+        if(!projects.length) throw { type: "Not Found", message:"Nenhum projeto registrado com esse tipo ainda"}
     }
-
-    if(!projects) throw { type: "Not Found", message:"None projects registred at database"}
     
     return projects;
 }
@@ -23,7 +19,7 @@ export async function getProjects(type: string | undefined): Promise<projectInfo
 export async function getPinnedProjects(): Promise<projectInfo[]> {
     const projectsPinned: projectInfo[] = await projectRepository.getPinnedProjects(); 
 
-    if(!projectsPinned) throw { type: "Not Found", message:"None projects registred at database"}
+    if(!projectsPinned.length) throw { type: "Not Found", message:"Nenhum projeto registrado na base de dados ainda"}
 
     return projectsPinned;
 } 
@@ -32,7 +28,7 @@ export async function getPinnedProjects(): Promise<projectInfo[]> {
 export async function getProjectInfo(id: number): Promise<projectInfo> {
     const projectInfos: projectInfo = await projectRepository.getProjectInfo(id);
 
-    if(!projectInfos) throw { type: "Not Found", message:"This project doesn't exists"}
+    if(!projectInfos) throw { type: "Not Found", message:"Esse projeto não existe"}
 
     return projectInfos;
 } 
@@ -45,7 +41,7 @@ export async function addProject(project: projectInfo): Promise<void> {
 export async function deleteProject(id: number) {
     const candidateDelete: projectInfo = await projectRepository.getProjectInfo(id);
 
-    if(!candidateDelete) throw { type: "Not Found", message:"This project doesn't exists anymore"}
+    if(!candidateDelete) throw { type: "Not Found", message:"Esse projeto já não existe mais"}
     
     await projectRepository.deleteProject(id);
 } 
@@ -54,7 +50,7 @@ export async function deleteProject(id: number) {
 export async function updateProjet(id: number, project: projectInfo) {
     const candidateDelete: projectInfo = await projectRepository.getProjectInfo(id);
 
-    if(!candidateDelete) throw { type: "Not Found", message:"This project doesn't exists anymore"}
+    if(!candidateDelete) throw { type: "Not Found", message:"Esse projeto sofreu modificação, pesquise-o novamente"}
 
     await projectRepository.updateProjet(id, project);
 } 
