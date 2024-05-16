@@ -39,11 +39,15 @@ export async function addProject(project: projectInfo): Promise<void> {
 export async function deleteProject(id: number) {
     const candidateDelete: projectInfo = await projectRepository.getProjectInfo(id);
 
-    if(!candidateDelete) throw { type: "Not Found", message:"This project doesn't exists"}
+    if(!candidateDelete) throw { type: "Not Found", message:"This project doesn't exists anymore"}
     
     await projectRepository.deleteProject(id);
 } 
 
 export async function updateProjet(id: number, project: projectInfo) {
-    
+    const candidateDelete: projectInfo = await projectRepository.getProjectInfo(id);
+
+    if(!candidateDelete) throw { type: "Not Found", message:"This project doesn't exists anymore"}
+
+    await projectRepository.updateProjet(id, project);
 } 

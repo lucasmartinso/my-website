@@ -23,13 +23,13 @@ export async function getProjectInfo(req: Request, res: Response): Promise<void>
 }
 
 export async function addProject(req: Request, res: Response): Promise<void> {
-    const project = req.body;
+    const project: projectInfo = req.body;
 } 
 
 export async function deleteProject(req: Request, res: Response): Promise<void> {
-    
+    const { id } = req.params;
 } 
 
 export async function updateProjet(req: Request, res: Response): Promise<void> {
-    
+    const { id } = req.params;
 } 

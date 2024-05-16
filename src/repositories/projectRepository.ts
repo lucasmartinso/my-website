@@ -53,10 +53,10 @@ export async function deleteProject(id: number) {
     `,[id]);
 } 
 
-export async function updateProjet(id: number, name: string | undefined, type: types | undefined, image: string | undefined, description: string | undefined, url: string | undefined, documentation: string | undefined, front: string | undefined, back: string | undefined, pinned: string | undefined) {
+export async function updateProjet(id: number, project: projectInfo) {
     await connection.query(`
         UPDATE "project" 
         SET name = $2, type = $3, image = $4, description = $5, url = $6, documentation = $7, front = $8, back = $9, pinned = $10
         WHERE id = $1
-    `,[id, name, type, image, description, url, documentation, front, back, pinned])
+    `,[id, project.name, project.type, project.image, project.description, project.url, project.documentation, project.front, project.back, project.pinned])
 }
