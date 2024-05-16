@@ -1,12 +1,19 @@
-import { Request, Response } from "express";
 import * as projectRepository from "../repositories/projectRepository";
 import { projectInfo } from "../types/projectType";
 
 export async function getProjects(type: string | undefined): Promise<projectInfo[]> { 
     let projects: projectInfo[];
 
-    if(!type) projects = await projectRepository.getProjects();
-    else projects = await projectRepository.getProjectsType(type);
+    if(!type) {
+        projects = await projectRepository.getProjects();
+    } else { 
+        console.log("OIII");
+        if(type !== 'web' && type !== 'notebook') { 
+            console.log("AQUIIII");
+            throw { type: "Not Found", message:"None projects registred with that type"} 
+        }
+        projects = await projectRepository.getProjectsType(type);
+    }
 
     if(!projects) throw { type: "Not Found", message:"None projects registred at database"}
     
@@ -30,9 +37,8 @@ export async function getProjectInfo(id: number): Promise<projectInfo> {
     return projectInfos;
 } 
 
-//estruturar regex
 export async function addProject(project: projectInfo): Promise<void> {
-    //regex(project)
+    
     await projectRepository.addProject(project);
 } 
 
