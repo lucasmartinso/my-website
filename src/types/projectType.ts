@@ -16,6 +16,19 @@ export interface projectInfo {
     pinned: boolean;
 } 
 
+export interface projectComplete { 
+    name: string;
+    type: types;
+    image: string; 
+    description: string; 
+    url: string | null; 
+    documentation: string; 
+    front: string | null; 
+    back: string | null; 
+    pinned: boolean;
+    technologies: string[];
+}
+
 export interface EnumObject {
     enumlabel: string;
 }

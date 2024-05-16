@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as projectService from "../services/projectService";
-import { projectInfo } from "../types/projectType";
+import { projectComplete, projectInfo } from "../types/projectType";
 
 export async function getProjects(req: Request, res: Response): Promise<void> { 
     const { type }: { type?: string | undefined } = req.query;
@@ -17,7 +17,7 @@ export async function getPinnedProjects(req: Request, res: Response): Promise<vo
 
 export async function getProjectInfo(req: Request, res: Response): Promise<void> {
     const id: number = Number(req.params.id);
-    const project: projectInfo = await projectService.getProjectInfo(id); 
+    const project: projectComplete = await projectService.getProjectInfo(id); 
     
     res.status(200).send(project);
 }

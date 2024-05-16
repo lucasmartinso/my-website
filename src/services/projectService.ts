@@ -1,5 +1,5 @@
 import * as projectRepository from "../repositories/projectRepository";
-import { EnumObject, projectInfo } from "../types/projectType";
+import { EnumObject, projectComplete, projectInfo } from "../types/projectType";
 
 export async function getProjects(type: any | undefined): Promise<projectInfo[]> { 
     let projects: projectInfo[];
@@ -25,10 +25,9 @@ export async function getPinnedProjects(): Promise<projectInfo[]> {
 
     return projectsPinned;
 } 
-
-//alterar pra voltar com as tecnologias do projeto 
-export async function getProjectInfo(id: number): Promise<projectInfo> {
-    const projectInfos: projectInfo[] = await projectRepository.getProjectInfo(id);
+ 
+export async function getProjectInfo(id: number): Promise<projectComplete> {
+    const projectInfos: projectComplete[] = await projectRepository.getProjectInfo(id);
 
     if(!projectInfos.length) throw { type: "Not Found", message:"Esse projeto não existe"}
 

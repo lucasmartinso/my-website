@@ -1,6 +1,6 @@
 import { QueryResult } from "pg";
 import connection from "../databases/postgres"; 
-import { EnumObject, projectInfo, types } from "../types/projectType";
+import { EnumObject, projectComplete, projectInfo, types } from "../types/projectType";
 
 export async function getProjects(): Promise<projectInfo[]> {
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
@@ -12,7 +12,7 @@ export async function getProjects(): Promise<projectInfo[]> {
 
 export async function getProjectsType(type: string): Promise<projectInfo[]> {
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
-        SELECT * FROM "project"
+        SELECT name, type, image, url, pinned FROM "project"
         WHERE "type" = $1
     `,[type]); 
 
@@ -21,19 +21,21 @@ export async function getProjectsType(type: string): Promise<projectInfo[]> {
 
 export async function getPinnedProjects(): Promise<projectInfo[]> { 
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
-        SELECT * FROM "project" 
+        SELECT name, type, image, url, pinned FROM "project" 
         WHERE "pinned" = $1
     `,[true]);
     
-    console.log(projects);
     return projects;
 } 
 
-//concertar esse type any
-export async function getProjectInfo(id: number): Promise<projectInfo[]> {
-    const { rows: project }: QueryResult<projectInfo> = await connection.query(`
-        SELECT * FROM "project" 
-        WHERE "id" = $1
+export async function getProjectInfo(id: number): Promise<projectComplete[]> {
+    const { rows: project }: QueryResult<projectComplete> = await connection.query(`
+        SELECT p.*, json_agg(t.name) AS technologies
+        FROM "project" p 
+        JOIN "projectTechnologies" pt ON p.id = pt."projectId"
+        JOIN "technology" t ON t.id = pt."technologyId"
+        WHERE p."id" = $1
+        GROUP BY p."id"
     `,[id]);
 
     return project;
