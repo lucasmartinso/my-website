@@ -24,12 +24,21 @@ export async function getProjectInfo(req: Request, res: Response): Promise<void>
 
 export async function addProject(req: Request, res: Response): Promise<void> {
     const project: projectInfo = req.body;
+    await projectService.addProject(project);
+    
+    res.status(201).send("Projeto criado com sucesso");
 } 
 
 export async function deleteProject(req: Request, res: Response): Promise<void> {
-    const { id } = req.params;
+    const id: number = Number(req.params.id);
+    await projectService.deleteProject(id);
+
+    res.status(200).send('Projeto deletado com sucesso');
 } 
 
 export async function updateProjet(req: Request, res: Response): Promise<void> {
-    const { id } = req.params;
+    const id: number = Number(req.params.id);
+    const project: projectInfo = req.body; 
+
+    await projectService.updateProjet(id, project)
 } 

@@ -8,7 +8,7 @@ export async function getProjects(type: string | undefined): Promise<projectInfo
         projects = await projectRepository.getProjects();
         if(!projects.length) throw { type: "Not Found", message:"Nenhum projeto encontrado na base de dados"}
     } else { 
-        if(type !== 'web' && type !== 'notebook') throw { type: "Unprocessable Entity", message:"Tipo inexistente"} 
+        if(type !== 'web' && type !== 'notebook') throw { type: "Bad Request", message:"Tipo inexistente"} 
         projects = await projectRepository.getProjectsType(type);
         if(!projects.length) throw { type: "Not Found", message:"Nenhum projeto registrado com esse tipo ainda"}
     }
@@ -34,7 +34,6 @@ export async function getProjectInfo(id: number): Promise<projectInfo> {
 } 
 
 export async function addProject(project: projectInfo): Promise<void> {
-    
     await projectRepository.addProject(project);
 } 
 
