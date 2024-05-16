@@ -21,6 +21,7 @@ export async function getPinnedProjects(): Promise<projectInfo[]> {
     return projectsPinned;
 } 
 
+//alterar pra voltar com as tecnologias do projeto 
 export async function getProjectInfo(id: number): Promise<projectInfo> {
     const projectInfos: projectInfo = await projectRepository.getProjectInfo(id);
 
@@ -35,10 +36,14 @@ export async function addProject(project: projectInfo): Promise<void> {
     await projectRepository.addProject(project);
 } 
 
-export async function excludeProject(id: number) {
+export async function deleteProject(id: number) {
+    const candidateDelete: projectInfo = await projectRepository.getProjectInfo(id);
+
+    if(!candidateDelete) throw { type: "Not Found", message:"This project doesn't exists"}
     
+    await projectRepository.deleteProject(id);
 } 
 
-export async function updateProjet() {
+export async function updateProjet(id: number, project: projectInfo) {
     
 } 

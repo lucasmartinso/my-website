@@ -42,8 +42,8 @@ export async function addProject(project: projectInfo): Promise<void> {
     await connection.query(`
         INSERT INTO "project"
         (name, type, image, description, url, documentation, front, back, pinned) 
-        VALUES(${project.name},${project.type},${project.image},${project.description},${project.url},${project.documentation},${project.front},${project.back},${project.back})
-    `); 
+        VALUES($1,$2,$3,$4,$5,$6,$7,$8)
+    `,[project.name,project.type,project.image,project.description,project.url,project.documentation,project.front,project.back,project.pinned]); 
 } 
 
 export async function deleteProject(id: number) {
@@ -56,7 +56,7 @@ export async function deleteProject(id: number) {
 export async function updateProjet(id: number, name: string | undefined, type: types | undefined, image: string | undefined, description: string | undefined, url: string | undefined, documentation: string | undefined, front: string | undefined, back: string | undefined, pinned: string | undefined) {
     await connection.query(`
         UPDATE "project" 
-        SET name = $2, type = $3, image = $4, url = $5, documentation = $6, front = $7, back = $8, pinned = $9
+        SET name = $2, type = $3, image = $4, description = $5, url = $6, documentation = $7, front = $8, back = $9, pinned = $10
         WHERE id = $1
     `,[id, name, type, image, description, url, documentation, front, back, pinned])
 }
