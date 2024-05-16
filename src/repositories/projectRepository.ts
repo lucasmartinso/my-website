@@ -42,7 +42,7 @@ export async function addProject(project: projectInfo): Promise<void> {
     await connection.query(`
         INSERT INTO "project"
         (name, type, image, description, url, documentation, front, back, pinned) 
-        VALUES($1,$2,$3,$4,$5,$6,$7,$8)
+        VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)
     `,[project.name,project.type,project.image,project.description,project.url,project.documentation,project.front,project.back,project.pinned]); 
 } 
 
