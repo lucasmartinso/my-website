@@ -26,7 +26,7 @@ export async function addProject(req: Request, res: Response): Promise<void> {
     const project = req.body;
 } 
 
-export async function excludeProject(req: Request, res: Response): Promise<void> {
+export async function deleteProject(req: Request, res: Response): Promise<void> {
     
 } 
 

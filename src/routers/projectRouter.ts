@@ -8,6 +8,6 @@ projectRouter.get("projects/pinned", projectController.getPinnedProjects);
 projectRouter.get("/projects/:id", projectController.getProjectInfo);
 projectRouter.post("/projects", projectController.addProject);
 projectRouter.put("/edit/projects/:id", projectController.updateProjet)
-projectRouter.delete("/delete/projects/:id", projectController.excludeProject)
+projectRouter.delete("/delete/projects/:id", projectController.deleteProject)
 
 export default projectRouter;

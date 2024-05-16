@@ -35,7 +35,7 @@ export async function addProject(project: projectInfo): Promise<void> {
     await projectRepository.addProject(project);
 } 
 
-export async function excludeProject() {
+export async function excludeProject(id: number) {
     
 } 
 
