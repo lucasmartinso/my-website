@@ -44,6 +44,7 @@ export async function deleteProject(id: number) {
     await projectRepository.deleteProject(id);
 } 
 
+//regex project
 export async function updateProjet(id: number, project: projectInfo) {
     const candidateDelete: projectInfo = await projectRepository.getProjectInfo(id);
 
