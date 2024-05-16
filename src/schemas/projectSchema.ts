@@ -1,7 +1,5 @@
 import joi from "joi";
 
-//fazer regex para o google drive com as documentacoes
-//fazer regex para o github com o readm.md
 export const projectSchema = joi.object({ 
     name: joi.string().min(2).max(30).required().label("Nome tem que ter entre 2 e 30 caracteres"),
     type: joi.string().valid('web','notebook').required().label("Type tem que ser: 'web' ou 'notebook'"),

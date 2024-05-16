@@ -1,6 +1,6 @@
 import { QueryResult } from "pg";
 import connection from "../databases/postgres"; 
-import { projectInfo, types } from "../types/projectType";
+import { EnumObject, projectInfo, types } from "../types/projectType";
 
 export async function getProjects(): Promise<projectInfo[]> {
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
@@ -59,4 +59,20 @@ export async function updateProjet(id: number, project: projectInfo) {
         SET name = $2, type = $3, image = $4, description = $5, url = $6, documentation = $7, front = $8, back = $9, pinned = $10
         WHERE id = $1
     `,[id, project.name, project.type, project.image, project.description, project.url, project.documentation, project.front, project.back, project.pinned])
+}
+
+export async function getTypes() { 
+    const { rows: oid }: any = await connection.query(`
+        SELECT oid, typname
+        FROM pg_type
+        WHERE typcategory = 'E' AND typname = 'type_project';
+    `);
+
+    const { rows: enumTypes }: QueryResult<EnumObject> = await connection.query(`
+        SELECT enumlabel
+        FROM pg_enum
+        WHERE enumtypid = $1;
+    `,[oid[0].oid]);
+    
+    return enumTypes;
 }

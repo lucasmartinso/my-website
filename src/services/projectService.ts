@@ -1,14 +1,16 @@
 import * as projectRepository from "../repositories/projectRepository";
-import { projectInfo } from "../types/projectType";
+import { EnumObject, projectInfo } from "../types/projectType";
 
-export async function getProjects(type: string | undefined): Promise<projectInfo[]> { 
+export async function getProjects(type: any | undefined): Promise<projectInfo[]> { 
     let projects: projectInfo[];
 
     if(!type) {
         projects = await projectRepository.getProjects();
         if(!projects.length) throw { type: "Not Found", message:"Nenhum projeto encontrado na base de dados"}
     } else { 
-        if(type !== 'web' && type !== 'notebook') throw { type: "Bad Request", message:"Tipo inexistente"} 
+        const types: EnumObject[] = await projectRepository.getTypes();
+        if(!types.some((str: EnumObject) => str.enumlabel == type)) throw { type: "Bad Request", message:"Tipo inexistente"} 
+        
         projects = await projectRepository.getProjectsType(type);
         if(!projects.length) throw { type: "Not Found", message:"Nenhum projeto registrado com esse tipo ainda"}
     }
@@ -19,7 +21,7 @@ export async function getProjects(type: string | undefined): Promise<projectInfo
 export async function getPinnedProjects(): Promise<projectInfo[]> {
     const projectsPinned: projectInfo[] = await projectRepository.getPinnedProjects(); 
 
-    if(!projectsPinned.length) throw { type: "Not Found", message:"Nenhum projeto registrado na base de dados ainda"}
+    if(!projectsPinned) throw { type: "Not Found", message:"Nenhum projeto registrado na base de dados ainda"}
 
     return projectsPinned;
 } 

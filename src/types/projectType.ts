@@ -1,3 +1,9 @@
+export enum types { 
+    web = "web", 
+    notebook = "notebook",
+    ai = "ai"
+} 
+
 export interface projectInfo { 
     name: string;
     type: types;
@@ -10,7 +16,6 @@ export interface projectInfo {
     pinned: boolean;
 } 
 
-export enum types { 
-    web = "web", 
-    notebook = "notebook"
+export interface EnumObject {
+    enumlabel: string;
 }
