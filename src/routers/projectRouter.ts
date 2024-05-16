@@ -6,7 +6,7 @@ import { projectSchema } from "../schemas/projectSchema";
 const projectRouter = Router(); 
 
 projectRouter.get("/projects", projectController.getProjects);
-projectRouter.get("projects/pinned", projectController.getPinnedProjects);
+projectRouter.get("/projects/pinned", projectController.getPinnedProjects);
 projectRouter.get("/projects/:id", projectController.getProjectInfo);
 projectRouter.post("/projects", schemaValidator(projectSchema), projectController.addProject);
 projectRouter.delete("/delete/projects/:id", projectController.deleteProject);

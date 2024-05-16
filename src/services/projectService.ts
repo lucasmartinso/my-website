@@ -21,18 +21,18 @@ export async function getProjects(type: any | undefined): Promise<projectInfo[]>
 export async function getPinnedProjects(): Promise<projectInfo[]> {
     const projectsPinned: projectInfo[] = await projectRepository.getPinnedProjects(); 
 
-    if(!projectsPinned) throw { type: "Not Found", message:"Nenhum projeto registrado na base de dados ainda"}
+    if(!projectsPinned.length) throw { type: "Not Found", message:"Nenhum projeto 'pinado' registrado na base de dados ainda"}
 
     return projectsPinned;
 } 
 
 //alterar pra voltar com as tecnologias do projeto 
 export async function getProjectInfo(id: number): Promise<projectInfo> {
-    const projectInfos: projectInfo = await projectRepository.getProjectInfo(id);
+    const projectInfos: projectInfo[] = await projectRepository.getProjectInfo(id);
 
-    if(!projectInfos) throw { type: "Not Found", message:"Esse projeto não existe"}
+    if(!projectInfos.length) throw { type: "Not Found", message:"Esse projeto não existe"}
 
-    return projectInfos;
+    return projectInfos[0];
 } 
 
 export async function addProject(project: projectInfo): Promise<void> {
@@ -40,18 +40,17 @@ export async function addProject(project: projectInfo): Promise<void> {
 } 
 
 export async function deleteProject(id: number) {
-    const candidateDelete: projectInfo = await projectRepository.getProjectInfo(id);
+    const candidateDelete: projectInfo[] = await projectRepository.getProjectInfo(id);
 
-    if(!candidateDelete) throw { type: "Not Found", message:"Esse projeto já não existe mais"}
+    if(!candidateDelete.length) throw { type: "Not Found", message:"Esse projeto já não existe mais"}
     
     await projectRepository.deleteProject(id);
 } 
 
-//regex project
 export async function updateProjet(id: number, project: projectInfo) {
-    const candidateDelete: projectInfo = await projectRepository.getProjectInfo(id);
+    const candidateUpdate: projectInfo[] = await projectRepository.getProjectInfo(id);
 
-    if(!candidateDelete) throw { type: "Not Found", message:"Esse projeto sofreu modificação, pesquise-o novamente"}
+    if(!candidateUpdate.length) throw { type: "Not Found", message:"Esse projeto sofreu modificação, pesquise-o novamente"}
 
     await projectRepository.updateProjet(id, project);
 } 

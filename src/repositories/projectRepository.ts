@@ -22,15 +22,16 @@ export async function getProjectsType(type: string): Promise<projectInfo[]> {
 export async function getPinnedProjects(): Promise<projectInfo[]> { 
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
         SELECT * FROM "project" 
-        WHERE "pinned" = true
-    `);
-
+        WHERE "pinned" = $1
+    `,[true]);
+    
+    console.log(projects);
     return projects;
 } 
 
 //concertar esse type any
-export async function getProjectInfo(id: number): Promise<projectInfo> {
-    const { rows: project }: any = await connection.query(`
+export async function getProjectInfo(id: number): Promise<projectInfo[]> {
+    const { rows: project }: QueryResult<projectInfo> = await connection.query(`
         SELECT * FROM "project" 
         WHERE "id" = $1
     `,[id]);
