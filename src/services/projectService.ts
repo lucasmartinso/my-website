@@ -35,6 +35,26 @@ export async function getProjectInfo(id: number): Promise<projectComplete> {
 } 
 
 export async function addProject(project: projectInfo): Promise<void> {
+    const [
+        repeteadName, 
+        repeteadUrl, 
+        repeteadFront, 
+        repeteadBack
+    ]: any = await Promise.all([
+        projectRepository.repeteadName(project.name), 
+        projectRepository.repeteadUrl(project.url),
+        projectRepository.repeteadFront(project.front),
+        projectRepository.repeteadBack(project.back)
+    ])
+
+    if(!repeteadName.length) throw { type: "Conflit", message: "Nome já existente"}
+    if(!repeteadUrl.length) throw { type: "Conflit", message: "Url do deploy já existente"}
+    if(!repeteadFront.length) throw { type: "Conflit", message: "Url do front já existente"}
+    if(!repeteadBack.length) throw { type: "Conflit", message: "Url do back já existente"}
+
+    // const exist: projectInfo[] = await projectRepository.verifyRepeteadFields(project);
+    // if(exist) throw { type: "Conflit", message: "Campos nome, url, front ou back já existentes"}
+
     await projectRepository.addProject(project);
 } 
 
@@ -49,7 +69,27 @@ export async function deleteProject(id: number) {
 export async function updateProjet(id: number, project: projectInfo) {
     const candidateUpdate: projectInfo[] = await projectRepository.getProjectInfo(id);
 
-    if(!candidateUpdate.length) throw { type: "Not Found", message:"Esse projeto sofreu modificação, pesquise-o novamente"}
+    if(!candidateUpdate.length) throw { type: "Not Found", message:"Esse projeto sofreu modificação ou não existe mais, pesquise-o novamente"}
+
+    const [
+        repeteadName, 
+        repeteadUrl, 
+        repeteadFront, 
+        repeteadBack
+    ]: any = await Promise.all([
+        projectRepository.repeteadName(project.name), 
+        projectRepository.repeteadUrl(project.url),
+        projectRepository.repeteadFront(project.front),
+        projectRepository.repeteadBack(project.back)
+    ])
+
+    if(!repeteadName.length) throw { type: "Conflit", message: "Nome já existente"}
+    if(!repeteadUrl.length) throw { type: "Conflit", message: "Url do deploy já existente"}
+    if(!repeteadFront.length) throw { type: "Conflit", message: "Url do front já existente"}
+    if(!repeteadBack.length) throw { type: "Conflit", message: "Url do back já existente"}
+    
+    // const exist: projectInfo[] = await projectRepository.verifyRepeteadFields(project);
+    // if(exist) throw { type: "Conflit", message: "Campos nome, url, front ou back já existentes"}
 
     await projectRepository.updateProjet(id, project);
 } 

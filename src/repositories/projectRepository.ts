@@ -4,7 +4,7 @@ import { EnumObject, projectComplete, projectInfo, types } from "../types/projec
 
 export async function getProjects(): Promise<projectInfo[]> {
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
-        SELECT * FROM "project"
+        SELECT name, type, image, url, pinned FROM "project"
     `); 
 
     return projects;
@@ -40,6 +40,51 @@ export async function getProjectInfo(id: number): Promise<projectComplete[]> {
 
     return project;
 } 
+
+export async function verifyRepeteadFields(project: projectInfo): Promise<projectInfo[]> {
+    const { rows: exist }: QueryResult<projectInfo> = await connection.query(`
+        SELECT * FROM "project" 
+        WHERE name = $1 OR  url = $2 OR front = $3 OR back $4
+    `,[project.name, project.url, project.front, project.back]);
+    
+    return exist;
+}
+
+export async function repeteadName(name: string): Promise<projectInfo[]> {
+    const { rows: existName }: QueryResult<projectInfo> = await connection.query(`
+        SELECT * FROM "project" 
+        WHERE name = $1
+    `,[name]);
+    
+    return existName;
+}
+
+export async function repeteadUrl(url: string | null): Promise<projectInfo[]> {
+    const { rows: existUrl }: QueryResult<projectInfo> = await connection.query(`
+        SELECT * FROM "project" 
+        WHERE url = $1
+    `,[url]);
+    
+    return existUrl;
+}
+
+export async function repeteadFront(front: string | null): Promise<projectInfo[]> {
+    const { rows: existFront }: QueryResult<projectInfo> = await connection.query(`
+        SELECT * FROM "project" 
+        WHERE front = $1
+    `,[front]);
+    
+    return existFront;
+}
+
+export async function repeteadBack(back: string | null): Promise<projectInfo[]> {
+    const { rows: existBack }: QueryResult<projectInfo> = await connection.query(`
+        SELECT * FROM "project" 
+        WHERE back = $1
+    `,[back]);
+    
+    return existBack;
+}
 
 export async function addProject(project: projectInfo): Promise<void> {
     await connection.query(`
