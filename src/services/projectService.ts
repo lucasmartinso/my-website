@@ -1,5 +1,6 @@
-import * as projectRepository from "../repositories/projectRepository";
 import { EnumObject, projectComplete, projectInfo } from "../types/projectType";
+import * as projectRepository from "../repositories/projectRepository";
+import * as technologyRepository from "../repositories/technologyRepository";
 
 export async function getProjects(type: any | undefined): Promise<projectInfo[]> { 
     let projects: projectInfo[];
@@ -59,10 +60,11 @@ export async function addProject(project: projectInfo): Promise<void> {
 } 
 
 export async function deleteProject(id: number) {
-    const candidateDelete: projectInfo[] = await projectRepository.getProjectInfo(id);
-
+    const candidateDelete: projectComplete[] = await projectRepository.getProjectInfo(id);
+    console.log(candidateDelete);
     if(!candidateDelete.length) throw { type: "Not Found", message:"Esse projeto já não existe mais"}
     
+    await technologyRepository.deleteProjectTechs(id);
     await projectRepository.deleteProject(id);
 } 
 
