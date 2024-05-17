@@ -6,3 +6,11 @@ export async function getTecnologies() {
 
     return technologies;
 }
+
+export async function addTechnology(technology: technology) {
+    const repetadTech: technology[] = await technologyRepository.getTecnologyName(technology.name);
+
+    if(!repetadTech.length) throw { type: "Conflit", message:"Tecnologia já cadastrada"}
+
+    await technologyRepository.addTechnology(technology);
+}
