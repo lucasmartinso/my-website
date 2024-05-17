@@ -21,8 +21,24 @@ export async function getTecnologyName(name: string) {
 
 export async function addTechnology(technology: technology) {
     await connection.query(`
+        INSERT INTO "technology" (name)
+        VALUES ($1)
+    `,[technology.name]);
+}
 
-    `)
+export async function deleteTechnology(id: number) {
+    await connection.query(`
+        DELETE FROM "technology" 
+        WHERE name = $1
+    `,[id])
+} 
+
+export async function updateTechnology(id: number, technology: technology) {
+    await connection.query(`
+        UPDATE technology 
+        SET name = $2
+        WHERE id = $1
+    `,[id, technology.name]);
 }
 
 //export async function updateProjectTech(name: string, )
