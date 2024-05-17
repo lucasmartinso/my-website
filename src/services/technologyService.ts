@@ -10,7 +10,7 @@ export async function getTecnologies() {
 export async function addTechnology(technology: technology) {
     const repetadTech: technology[] = await technologyRepository.getTecnologyName(technology.name);
 
-    if(!repetadTech.length) throw { type: "Conflit", message:"Tecnologia já cadastrada"}
+    if(repetadTech.length) throw { type: "Conflit", message:"Tecnologia já cadastrada"}
 
     await technologyRepository.addTechnology(technology);
 }
@@ -24,9 +24,16 @@ export async function deleteTechnology(id: number) {
 }
 
 export async function updateTechnology(id: number, technology: technology) {
-    const existTech: technology[] = await technologyRepository.getTecnologyId(id);
+    const [
+        existTech, 
+        repeteadName
+    ]: any = await Promise.all([
+        technologyRepository.getTecnologyId(id), 
+        technologyRepository.getTecnologyName(technology.name)
+    ])
 
     if(!existTech.length) throw { type: "Not Found", message:"Tecnologia não existe na base de dados"}
+    if(repeteadName.length) throw { type: "Conflit", message:"Tecnologia já existente com esse nome"}
 
     await technologyRepository.updateTechnology(id, technology);
 }

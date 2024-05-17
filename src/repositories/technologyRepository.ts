@@ -38,7 +38,7 @@ export async function addTechnology(technology: technology) {
 export async function deleteTechnology(id: number) {
     await connection.query(`
         DELETE FROM "technology" 
-        WHERE name = $1
+        WHERE id = $1
     `,[id])
 } 
 

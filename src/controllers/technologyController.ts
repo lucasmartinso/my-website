@@ -21,7 +21,7 @@ export async function deleteTechnology(req: Request, res: Response): Promise<voi
 
     await technologyService.deleteTechnology(id);
 
-    res.status(201).send('Tecnologia excluida da base de dados com sucesso');
+    res.status(200).send('Tecnologia excluida da base de dados com sucesso');
 }
 
 export async function updateTechnology(req: Request, res: Response): Promise<void> {
