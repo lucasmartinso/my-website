@@ -9,5 +9,6 @@ export const projectSchema = joi.object({
     documentation: joi.string().uri().pattern(/^https:\/\/drive\.google\.com\/file\//).required().label("Documentação tem que ser uma url do drive, ex: https://drive.google.com/file/ ..."), 
     front: joi.string().uri().allow(null).pattern(/^https:\/\/github\.com\//).label("Front tem que ser uma url para o GitHub, ex: https://github.com/ ..."),
     back: joi.string().uri().allow(null).pattern(/^https:\/\/github\.com\//).label("Back tem que ser uma url para o GitHub, ex: https://github.com/ ..."),
-    pinned: joi.boolean().label("Tem que ser 'true' ou 'false'")
+    pinned: joi.boolean().label("Tem que ser 'true' ou 'false'"),
+    technologies: joi.array().items(joi.string()).required().label("Cadastrar as tecnologias utilizadas no projeto")
 });

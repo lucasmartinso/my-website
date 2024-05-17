@@ -23,7 +23,7 @@ export async function getProjectInfo(req: Request, res: Response): Promise<void>
 }
 
 export async function addProject(req: Request, res: Response): Promise<void> {
-    const project: projectInfo = req.body;
+    const project: projectComplete = req.body;
     await projectService.addProject(project);
     
     res.status(201).send("Projeto criado com sucesso");
