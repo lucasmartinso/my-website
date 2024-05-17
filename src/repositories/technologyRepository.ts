@@ -19,6 +19,15 @@ export async function getTecnologyName(name: string) {
     return technologies; 
 }
 
+export async function getTecnologyId(id: number) {
+    const { rows: technologies }: QueryResult<technology> = await connection.query(`
+        SELECT * FROM "technology"
+        WHERE id = $1
+    `,[id]); 
+
+    return technologies; 
+}
+
 export async function addTechnology(technology: technology) {
     await connection.query(`
         INSERT INTO "technology" (name)

@@ -14,3 +14,11 @@ export async function addTechnology(technology: technology) {
 
     await technologyRepository.addTechnology(technology);
 }
+
+export async function deleteTechnology(id: number) {
+    const existTech: technology[] = await technologyRepository.getTecnologyId(id);
+
+    if(!existTech.length) throw { type: "Conflit", message:"Tecnologia já cadastrada"}
+
+    await technologyRepository.deleteTechnology(id);
+}
