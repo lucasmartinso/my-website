@@ -64,7 +64,7 @@ export async function deleteProject(id: number) {
     console.log(candidateDelete);
     if(!candidateDelete.length) throw { type: "Not Found", message:"Esse projeto já não existe mais"}
     
-    await technologyRepository.deleteProjectTechs(id);
+    await technologyRepository.deleteProjectWithTechs(id);
     await projectRepository.deleteProject(id);
 } 
 
