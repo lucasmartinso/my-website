@@ -6,6 +6,8 @@ export async function getTecnologies() {
     `); 
 } 
 
+//export async function updateProjectTech(name: string, )
+
 export async function deleteProjectTechs(projectId: number) {
     await connection.query(`
         DELETE FROM "projectTechnologies"

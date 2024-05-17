@@ -35,7 +35,7 @@ export async function getProjectInfo(id: number): Promise<projectComplete> {
     return projectInfos[0];
 } 
 
-export async function addProject(project: projectInfo): Promise<void> {
+export async function addProject(project: projectComplete): Promise<void> {
     const [
         repeteadName, 
         repeteadUrl, 
