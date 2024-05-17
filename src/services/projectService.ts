@@ -47,10 +47,10 @@ export async function addProject(project: projectInfo): Promise<void> {
         projectRepository.repeteadBack(project.back)
     ])
 
-    if(!repeteadName.length) throw { type: "Conflit", message: "Nome já existente"}
-    if(!repeteadUrl.length) throw { type: "Conflit", message: "Url do deploy já existente"}
-    if(!repeteadFront.length) throw { type: "Conflit", message: "Url do front já existente"}
-    if(!repeteadBack.length) throw { type: "Conflit", message: "Url do back já existente"}
+    if(repeteadName.length) throw { type: "Conflit", message: "Nome já existente"}
+    if(repeteadUrl.length) throw { type: "Conflit", message: "Url do deploy já existente"}
+    if(repeteadFront.length) throw { type: "Conflit", message: "Url do front já existente"}
+    if(repeteadBack.length) throw { type: "Conflit", message: "Url do back já existente"}
 
     // const exist: projectInfo[] = await projectRepository.verifyRepeteadFields(project);
     // if(exist) throw { type: "Conflit", message: "Campos nome, url, front ou back já existentes"}

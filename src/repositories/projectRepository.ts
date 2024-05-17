@@ -41,14 +41,14 @@ export async function getProjectInfo(id: number): Promise<projectComplete[]> {
     return project;
 } 
 
-export async function verifyRepeteadFields(project: projectInfo): Promise<projectInfo[]> {
-    const { rows: exist }: QueryResult<projectInfo> = await connection.query(`
-        SELECT * FROM "project" 
-        WHERE name = $1 OR  url = $2 OR front = $3 OR back $4
-    `,[project.name, project.url, project.front, project.back]);
+// export async function verifyRepeteadFields(project: projectInfo): Promise<projectInfo[]> {
+//     const { rows: exist }: QueryResult<projectInfo> = await connection.query(`
+//         SELECT * FROM "project" 
+//         WHERE name = $1 OR  url = $2 OR front = $3 OR back $4
+//     `,[project.name, project.url, project.front, project.back]);
     
-    return exist;
-}
+//     return exist;
+// }
 
 export async function repeteadName(name: string): Promise<projectInfo[]> {
     const { rows: existName }: QueryResult<projectInfo> = await connection.query(`
@@ -62,8 +62,8 @@ export async function repeteadName(name: string): Promise<projectInfo[]> {
 export async function repeteadUrl(url: string | null): Promise<projectInfo[]> {
     const { rows: existUrl }: QueryResult<projectInfo> = await connection.query(`
         SELECT * FROM "project" 
-        WHERE url = $1
-    `,[url]);
+        WHERE url = $1 AND url <> $2
+    `,[url,null]);
     
     return existUrl;
 }
