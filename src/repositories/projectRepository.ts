@@ -4,7 +4,8 @@ import { EnumObject, projectComplete, projectInfo, types } from "../types/projec
 
 export async function getProjects(): Promise<projectInfo[]> {
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
-        SELECT name, type, image, url, pinned FROM "project"
+        SELECT id, name, type, image, url, pinned 
+        FROM "project"
     `); 
 
     return projects;
@@ -12,7 +13,8 @@ export async function getProjects(): Promise<projectInfo[]> {
 
 export async function getProjectsType(type: string): Promise<projectInfo[]> {
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
-        SELECT name, type, image, url, pinned FROM "project"
+        SELECT id, name, type, image, url, pinned 
+        FROM "project"
         WHERE "type" = $1
     `,[type]); 
 
@@ -21,7 +23,8 @@ export async function getProjectsType(type: string): Promise<projectInfo[]> {
 
 export async function getPinnedProjects(): Promise<projectInfo[]> { 
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
-        SELECT name, type, image, url, pinned FROM "project" 
+        SELECT id, name, type, image, url, pinned 
+        FROM "project" 
         WHERE "pinned" = $1
     `,[true]);
     
