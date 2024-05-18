@@ -38,7 +38,7 @@ export async function deleteProject(req: Request, res: Response): Promise<void> 
 
 export async function updateProjet(req: Request, res: Response): Promise<void> {
     const id: number = Number(req.params.id);
-    const project: projectInfo = req.body; 
+    const project: projectComplete = req.body; 
 
-    await projectService.updateProjet(id, project)
+    await projectService.updateProject(id, project)
 } 

@@ -28,11 +28,11 @@ export async function getTecnologyId(id: number): Promise<technology[]> {
     return technologies; 
 }
 
-export async function addTechnology(technology: technology): Promise<void> {
+export async function addTechnology(technology: string): Promise<void> {
     await connection.query(`
         INSERT INTO "technology" (name)
         VALUES ($1)
-    `,[technology.name]);
+    `,[technology]);
 }
 
 export async function deleteTechnology(id: number): Promise<void> {
@@ -52,7 +52,7 @@ export async function updateTechnology(id: number, technology: technology): Prom
 
 export async function addProjectTech(projectId: number, techId: number): Promise<void> {
     await connection.query(`
-        INSERT INTO "projectTecnologies" 
+        INSERT INTO "projectTechnologies" 
         ("projectId", "technologyId")
         VALUES ($1, $2)
     `,[projectId, techId]);

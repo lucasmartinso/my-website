@@ -12,7 +12,7 @@ export async function addTechnology(technology: technology) {
 
     if(repetadTech.length) throw { type: "Conflit", message:"Tecnologia já cadastrada"}
 
-    await technologyRepository.addTechnology(technology);
+    await technologyRepository.addTechnology(technology.name);
 }
 
 export async function deleteTechnology(id: number) {
