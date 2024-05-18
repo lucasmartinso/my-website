@@ -79,8 +79,8 @@ export async function deleteProject(id: number) {
 //fazer o loop para saber quais techs já estao na tabela 
 //fazer loop para adicionar quais não estao 
 //remover as que não constam mais
-export async function updateProjet(id: number, project: projectInfo) {
-    const candidateUpdate: projectInfo[] = await projectRepository.getProjectInfo(id);
+export async function updateProjet(id: number, project: projectComplete) {
+    const candidateUpdate: projectComplete[] = await projectRepository.getProjectInfo(id);
 
     if(!candidateUpdate.length) throw { type: "Not Found", message:"Esse projeto sofreu modificação ou não existe mais, pesquise-o novamente"}
 
