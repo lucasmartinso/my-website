@@ -40,5 +40,7 @@ export async function updateProjet(req: Request, res: Response): Promise<void> {
     const id: number = Number(req.params.id);
     const project: projectComplete = req.body; 
 
-    await projectService.updateProject(id, project)
+    await projectService.updateProject(id, project);
+
+    res.status(200).send('Projeto ataualizado com sucesso');
 } 

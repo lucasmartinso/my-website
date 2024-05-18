@@ -76,7 +76,6 @@ export async function addProject(project: projectComplete): Promise<void> {
 
 export async function deleteProject(id: number) {
     const candidateDelete: projectComplete[] = await projectRepository.getProjectInfo(id);
-    console.log(candidateDelete);
     if(!candidateDelete.length) throw { type: "Not Found", message:"Esse projeto já não existe mais"}
     
     await technologyRepository.deleteProjectWithTechs(id);
@@ -90,7 +89,7 @@ export async function updateProject(id: number, project: Omit<projectComplete, '
     const candidateUpdate: projectComplete[] = await projectRepository.getProjectInfo(id);
 
     if(!candidateUpdate.length) throw { type: "Not Found", message:"Esse projeto sofreu modificação ou não existe mais, pesquise-o novamente"}
-
+    
     const [
         repeteadName, 
         repeteadUrl, 
@@ -103,10 +102,10 @@ export async function updateProject(id: number, project: Omit<projectComplete, '
         projectRepository.repeteadBack(project.back)
     ])
 
-    if(!repeteadName.length) throw { type: "Conflit", message: "Nome já existente"}
-    if(!repeteadUrl.length) throw { type: "Conflit", message: "Url do deploy já existente"}
-    if(!repeteadFront.length) throw { type: "Conflit", message: "Url do front já existente"}
-    if(!repeteadBack.length) throw { type: "Conflit", message: "Url do back já existente"}
+    if(repeteadName.length && project.name !== candidateUpdate[0].name) throw { type: "Conflit", message: "Nome já existente"}
+    if(repeteadUrl.length && project.url !== candidateUpdate[0].url) throw { type: "Conflit", message: "Url do deploy já existente"}
+    if(repeteadFront.length && project.front !== candidateUpdate[0].front) throw { type: "Conflit", message: "Url do front já existente"}
+    if(repeteadBack.length && project.back !== candidateUpdate[0].back) throw { type: "Conflit", message: "Url do back já existente"}
     
     // const exist: projectInfo[] = await projectRepository.verifyRepeteadFields(project);
     // if(exist) throw { type: "Conflit", message: "Campos nome, url, front ou back já existentes"}
