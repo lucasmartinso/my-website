@@ -89,7 +89,7 @@ export async function repeteadBack(back: string | null): Promise<projectInfo[]> 
     return existBack;
 }
 
-export async function addProject(project: projectInfo): Promise<void> {
+export async function addProject(project: projectComplete): Promise<void> {
     await connection.query(`
         INSERT INTO "project"
         (name, type, image, description, url, documentation, front, back, pinned) 

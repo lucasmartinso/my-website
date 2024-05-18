@@ -5,6 +5,7 @@ export enum types {
 } 
 
 export interface projectInfo { 
+    id: number;
     name: string;
     type: types;
     image: string; 

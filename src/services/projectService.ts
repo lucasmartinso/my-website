@@ -1,6 +1,7 @@
 import { EnumObject, projectComplete, projectInfo } from "../types/projectType";
 import * as projectRepository from "../repositories/projectRepository";
 import * as technologyRepository from "../repositories/technologyRepository";
+import { technology } from "../types/technologyType";
 
 export async function getProjects(type: any | undefined): Promise<projectInfo[]> { 
     let projects: projectInfo[];
@@ -35,6 +36,7 @@ export async function getProjectInfo(id: number): Promise<projectComplete> {
     return projectInfos[0];
 } 
 
+//fazer o loop para adicionar na tabela projectTech, query já está pronta
 export async function addProject(project: projectComplete): Promise<void> {
     const [
         repeteadName, 
@@ -57,6 +59,12 @@ export async function addProject(project: projectComplete): Promise<void> {
     // if(exist) throw { type: "Conflit", message: "Campos nome, url, front ou back já existentes"}
 
     await projectRepository.addProject(project);
+    const projectId: projectInfo[] = await projectRepository.repeteadName(project.name);
+    project.technologies.forEach(async tech => {
+        console.log()
+        const techId: technology[] = await technologyRepository.getTecnologyName(tech)
+        await technologyRepository.addProjectTech(projectId[0].id, techId[0].id);
+    });
 } 
 
 export async function deleteProject(id: number) {
@@ -68,6 +76,9 @@ export async function deleteProject(id: number) {
     await projectRepository.deleteProject(id);
 } 
 
+//fazer o loop para saber quais techs já estao na tabela 
+//fazer loop para adicionar quais não estao 
+//remover as que não constam mais
 export async function updateProjet(id: number, project: projectInfo) {
     const candidateUpdate: projectInfo[] = await projectRepository.getProjectInfo(id);
 
