@@ -20,6 +20,7 @@ export interface projectInfo {
 } 
 
 export interface projectComplete { 
+    id: number;
     name: string;
     type: types;
     image: string; 

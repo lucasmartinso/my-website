@@ -104,7 +104,7 @@ export async function deleteProject(id: number) {
     `,[id]);
 } 
 
-export async function updateProject(id: number, project: projectComplete) {
+export async function updateProject(id: number, project: Omit<projectComplete, 'id'>) {
     await connection.query(`
         UPDATE "project" 
         SET name = $2, type = $3, image = $4, description = $5, url = $6, documentation = $7, front = $8, back = $9, pinned = $10

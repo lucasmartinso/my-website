@@ -86,7 +86,7 @@ export async function deleteProject(id: number) {
 //fazer o loop para saber quais techs já estao na tabela 
 //fazer loop para adicionar quais não estao 
 //remover as que não constam mais
-export async function updateProject(id: number, project: projectComplete) {
+export async function updateProject(id: number, project: Omit<projectComplete, 'id'>) {
     const candidateUpdate: projectComplete[] = await projectRepository.getProjectInfo(id);
 
     if(!candidateUpdate.length) throw { type: "Not Found", message:"Esse projeto sofreu modificação ou não existe mais, pesquise-o novamente"}
@@ -110,6 +110,24 @@ export async function updateProject(id: number, project: projectComplete) {
     
     // const exist: projectInfo[] = await projectRepository.verifyRepeteadFields(project);
     // if(exist) throw { type: "Conflit", message: "Campos nome, url, front ou back já existentes"}
+    
+    candidateUpdate[0].technologies.forEach(async tech => { 
+        if(!project.technologies.some(e => e == tech)) {
+            const techId: technology[] = await technologyRepository.getTecnologyName(tech);
+            technologyRepository.deleteTechsOfProject(candidateUpdate[0].id, techId[0].id);  
+        } 
+    })
+     
+    project.technologies.forEach(async tech => {
+        let techId: technology[] = await technologyRepository.getTecnologyName(tech);
+
+        if(!techId.length) {
+            await technologyRepository.addTechnology(tech); 
+            techId = await technologyRepository.getTecnologyName(tech);
+        } else if(!candidateUpdate[0].technologies.some(e => e == tech)) {
+            await technologyRepository.addProjectTech(candidateUpdate[0].id, techId[0].id);
+        }
+    });
 
     await projectRepository.updateProject(id, project);
 } 
