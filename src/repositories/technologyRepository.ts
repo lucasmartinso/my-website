@@ -71,3 +71,10 @@ export async function deleteTechsOfProject(projectId: number, techId: number) {
         WHERE "projectId" = $1 AND "technologyId" = $2
     `,[projectId,techId])
 }
+
+export async function deleteTechOfProjectTech(techId: number) {
+    await connection.query(`
+        DELETE FROM "projectTechnologies" 
+        WHERE "technologyId" = $1
+    `,[techId])
+}
