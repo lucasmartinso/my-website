@@ -36,7 +36,9 @@ export async function getProjectInfo(id: number): Promise<projectComplete> {
     return projectInfos[0];
 } 
 
-export async function addProject(project: projectComplete): Promise<void> {
+export async function addProject(project: projectComplete): Promise<void> { 
+    if(!project.technologies.length) throw { type: "Unprocessable Entity", message:"Necessário cadastrar ao menos uma tecnologia"}
+
     const [
         repeteadName, 
         repeteadUrl, 
@@ -82,14 +84,13 @@ export async function deleteProject(id: number) {
     await projectRepository.deleteProject(id);
 } 
 
-//fazer o loop para saber quais techs já estao na tabela 
-//fazer loop para adicionar quais não estao 
-//remover as que não constam mais
 export async function updateProject(id: number, project: Omit<projectComplete, 'id'>) {
     const candidateUpdate: projectComplete[] = await projectRepository.getProjectInfo(id);
 
     if(!candidateUpdate.length) throw { type: "Not Found", message:"Esse projeto sofreu modificação ou não existe mais, pesquise-o novamente"}
     
+    if(!project.technologies.length) throw { type: "Unprocessable Entity", message:"Necessário cadastrar ao menos uma tecnologia"}
+
     const [
         repeteadName, 
         repeteadUrl, 
