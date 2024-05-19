@@ -20,6 +20,7 @@ export async function deleteTechnology(id: number) {
 
     if(!existTech.length) throw { type: "Not Found", message:"Tecnologia não existe na base de dados"}
 
+    await technologyRepository.deleteTechOfProjectTech(id);
     await technologyRepository.deleteTechnology(id);
 }
 
