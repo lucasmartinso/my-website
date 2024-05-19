@@ -1,3 +1,5 @@
+import { technology } from "./technologyType";
+
 export enum types { 
     web = "web", 
     notebook = "notebook",
@@ -5,6 +7,7 @@ export enum types {
 } 
 
 export interface projectInfo { 
+    id: number;
     name: string;
     type: types;
     image: string; 
@@ -17,6 +20,7 @@ export interface projectInfo {
 } 
 
 export interface projectComplete { 
+    id: number;
     name: string;
     type: types;
     image: string; 

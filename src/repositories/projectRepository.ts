@@ -89,7 +89,7 @@ export async function repeteadBack(back: string | null): Promise<projectInfo[]> 
     return existBack;
 }
 
-export async function addProject(project: projectInfo): Promise<void> {
+export async function addProject(project: projectComplete): Promise<void> {
     await connection.query(`
         INSERT INTO "project"
         (name, type, image, description, url, documentation, front, back, pinned) 
@@ -104,7 +104,7 @@ export async function deleteProject(id: number) {
     `,[id]);
 } 
 
-export async function updateProjet(id: number, project: projectInfo) {
+export async function updateProject(id: number, project: Omit<projectComplete, 'id'>) {
     await connection.query(`
         UPDATE "project" 
         SET name = $2, type = $3, image = $4, description = $5, url = $6, documentation = $7, front = $8, back = $9, pinned = $10

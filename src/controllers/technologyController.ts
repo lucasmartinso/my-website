@@ -11,7 +11,24 @@ export async function getTechnologies(req: Request, res: Response): Promise<void
 export async function addTechnology(req: Request, res: Response): Promise<void> {
     const technology: technology = req.body;
 
-    await 
+    await technologyService.addTechnology(technology);
 
     res.status(201).send('Tecnologia adicionada com sucesso');
+}
+
+export async function deleteTechnology(req: Request, res: Response): Promise<void> {
+    const id: number = Number(req.params.id);
+
+    await technologyService.deleteTechnology(id);
+
+    res.status(200).send('Tecnologia excluida da base de dados com sucesso');
+}
+
+export async function updateTechnology(req: Request, res: Response): Promise<void> {
+    const id: number = Number(req.params.id);
+    const technology: technology = req.body;
+
+    await technologyService.updateTechnology(id,technology);
+
+    res.status(200).send('Tecnologia atualizada com sucesso');
 }
