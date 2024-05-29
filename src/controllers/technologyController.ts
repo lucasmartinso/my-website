@@ -36,7 +36,7 @@ export async function updateTechnology(req: Request, res: Response): Promise<voi
 export async function searchTech(req: Request, res: Response): Promise<void> {
     const tech: string = req.body.tech;
 
-    await technologyService.searchTech(tech);
+    const technologies: technology[] = await technologyService.searchTech(tech);
 
-    res.status(200).send('Tecnologia atualizada com sucesso');
+    res.status(200).send(technologies);
 }
