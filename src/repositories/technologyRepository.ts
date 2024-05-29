@@ -58,23 +58,34 @@ export async function addProjectTech(projectId: number, techId: number): Promise
     `,[projectId, techId]);
 }
 
-export async function deleteProjectWithTechs(projectId: number) {
+export async function deleteProjectWithTechs(projectId: number): Promise<void> {
     await connection.query(`
         DELETE FROM "projectTechnologies"
         WHERE "projectId" = $1
     `,[projectId])
 }
 
-export async function deleteTechsOfProject(projectId: number, techId: number) {
+export async function deleteTechsOfProject(projectId: number, techId: number): Promise<void> {
     await connection.query(`
         DELETE FROM "projectTechnologies"
         WHERE "projectId" = $1 AND "technologyId" = $2
     `,[projectId,techId])
 }
 
-export async function deleteTechOfProjectTech(techId: number) {
+export async function deleteTechOfProjectTech(techId: number): Promise<void> {
     await connection.query(`
         DELETE FROM "projectTechnologies" 
         WHERE "technologyId" = $1
     `,[techId])
+} 
+
+export async function searchTechs(tech: string): Promise<technology[]> {
+    const { rows: technologies }: QueryResult<technology> = await connection.query({
+        text:`SELECT FROM technology 
+            WHERE ILIKE ($1)
+            OFFSET 0 LIMIT 10
+        `, values: [`${tech}%`]
+    }) 
+
+    return technologies;
 }
