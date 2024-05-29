@@ -40,7 +40,7 @@ export async function updateTechnology(id: number, technology: technology): Prom
 } 
 
 export async function searchTech(tech: string): Promise<technology[]> {
-    const technologies: technology[] = //await 
+    const technologies: technology[] = await technologyRepository.searchTechs(tech);
 
     return technologies;
 }
