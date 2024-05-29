@@ -80,9 +80,11 @@ export async function deleteTechOfProjectTech(techId: number): Promise<void> {
 } 
 
 export async function searchTechs(tech: string): Promise<technology[]> {
+    //console.log("OIII");
     const { rows: technologies }: QueryResult<technology> = await connection.query({
-        text:`SELECT FROM technology 
-            WHERE ILIKE ($1)
+        text:`SELECT * FROM technology 
+            WHERE name ILIKE ($1)
+            ORDER BY name ASC
             OFFSET 0 LIMIT 10
         `, values: [`${tech}%`]
     }) 
