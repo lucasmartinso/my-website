@@ -1,8 +1,9 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import { mailInfo } from "../types/personalType";
 dotenv.config();
 
-export async function sendMail(emailInfo: any): Promise<void> {
+export async function sendMail(emailInfo: mailInfo): Promise<void> {
     const transport = nodemailer.createTransport({ 
         host: 'smtp.gmail.com',
         port: 465,
@@ -20,11 +21,14 @@ export async function sendMail(emailInfo: any): Promise<void> {
         text: emailInfo.text
     };
 
-    transport.sendMail(mailOptions, (error, info) => {
+    console.log(mailOptions);
+
+    await transport.sendMail(mailOptions, (error, info) => {
         if (error) {
           console.error('Error sending email:', error);
+          throw { type: "Bad Request", message: `Erro: ${error}` }
         } else {
-          console.log('Email sent:', info.response);
+            console.log('Email sent:', info.response);
         }
     });
 }

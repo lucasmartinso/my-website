@@ -37,4 +37,8 @@ export async function updateTechnology(id: number, technology: technology) {
     if(repeteadName.length) throw { type: "Conflit", message:"Tecnologia já existente com esse nome"}
 
     await technologyRepository.updateTechnology(id, technology);
+} 
+
+export async function searchTech(tech: string) {
+    
 }
