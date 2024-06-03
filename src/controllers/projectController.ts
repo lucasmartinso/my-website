@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as projectService from "../services/projectService";
-import { projectComplete, projectInfo } from "../types/projectType";
+import { EnumObject, projectComplete, projectInfo, types } from "../types/projectType";
 
 export async function getProjects(req: Request, res: Response): Promise<void> { 
     const { type }: { type?: string | undefined } = req.query;
@@ -20,6 +20,12 @@ export async function getProjectInfo(req: Request, res: Response): Promise<void>
     const project: projectComplete = await projectService.getProjectInfo(id); 
     
     res.status(200).send(project);
+}
+
+export async function getProjectTypes(req: Request, res: Response): Promise<void> {
+    const types: EnumObject[] = await projectService.getProjectType(); 
+    
+    res.status(200).send(types);
 }
 
 export async function addProject(req: Request, res: Response): Promise<void> {
