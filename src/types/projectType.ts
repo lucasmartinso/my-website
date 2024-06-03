@@ -1,5 +1,3 @@
-import { technology } from "./technologyType";
-
 export enum types { 
     web = "web", 
     notebook = "notebook",

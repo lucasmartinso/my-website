@@ -37,9 +37,10 @@ export async function getProjectInfo(id: number): Promise<projectComplete> {
 } 
 
 export async function getProjectType() {
-    const projectTypes: EnumObject[] = await projectRepository.getTypes();
+    const types: EnumObject[] = await projectRepository.getTypes();
+    console.log(types);
 
-    return projectTypes;
+    return types;
 }
 
 export async function addProject(project: projectComplete): Promise<void> { 
