@@ -84,7 +84,6 @@ export async function searchTechs(tech: string): Promise<technology[]> {
         text:`SELECT * FROM technology 
             WHERE name ILIKE ($1)
             ORDER BY name ASC
-            OFFSET 0 LIMIT 10
         `, values: [`${tech}%`]
     }) 
 
