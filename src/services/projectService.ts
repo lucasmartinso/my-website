@@ -38,7 +38,6 @@ export async function getProjectInfo(id: number): Promise<projectComplete> {
 
 export async function getProjectType() {
     const types: EnumObject[] = await projectRepository.getTypes();
-    console.log(types);
 
     return types;
 }
