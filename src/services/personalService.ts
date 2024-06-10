@@ -52,5 +52,7 @@ export async function login(loginData: loginInfo) {
         const token: string = jwt.sign(payload,SECRET,jwtConfig);
 
         return token;
+    } else { 
+        throw { type: "Unauthorized", message: `Não autorizado, email ou senha incompatíveis` }
     }
 }

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as personalService from "../services/personalService";
+import { loginInfo } from "../types/personalType";
 
 export async function sendEmail(req: Request, res: Response): Promise<void> {
     const emailInfo = req.body;
@@ -10,7 +11,9 @@ export async function sendEmail(req: Request, res: Response): Promise<void> {
 }
 
 export async function login(req: Request, res: Response): Promise<void> {
-    const loginData = req.body; 
+    const loginData: loginInfo = req.body; 
 
-    res.status(200);
+    const token: string = await personalService.login(loginData);
+
+    res.status(200).send({token});
 }
