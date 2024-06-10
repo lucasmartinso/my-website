@@ -17,3 +17,7 @@ export async function login(req: Request, res: Response): Promise<void> {
 
     res.status(200).send({token});
 }
+
+export async function validateAuth(req: Request, res: Response): Promise<void> {
+    res.status(202).send("Token válido!!");
+}

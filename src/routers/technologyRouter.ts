@@ -7,7 +7,7 @@ import { validateTokenAuth } from "../middlewares/authMiddleware";
 const projectRouter = Router(); 
 
 projectRouter.get("/techs", technologyController.getTechnologies);
-projectRouter.post("/techs", validateTokenAuth, schemaValidator(technologySchema), technologyController.addTechnology);
+projectRouter.post("/techs", schemaValidator(technologySchema), validateTokenAuth, technologyController.addTechnology);
 projectRouter.post("/techs/search", technologyController.searchTech);
 projectRouter.delete("/delete/techs/:id", validateTokenAuth, technologyController.deleteTechnology);
 projectRouter.put("/edit/techs/:id", schemaValidator(technologySchema), validateTokenAuth, technologyController.updateTechnology);
