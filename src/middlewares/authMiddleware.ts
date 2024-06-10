@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-export async function authMiddleware(req: Request, res: Response, next: NextFunction) {
+export async function validateTokenAuth(req: Request, res: Response, next: NextFunction) {
     const Authorization = req.headers.authorization;
     const token = Authorization?.replace("Bearer ", "");
 
