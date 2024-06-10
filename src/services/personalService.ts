@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import { loginInfo, mailInfo } from "../types/personalType";
+import jwt from "jsonwebtoken";
 dotenv.config();
 
 export async function sendMail(emailInfo: mailInfo): Promise<void> {
@@ -34,5 +35,22 @@ export async function sendMail(emailInfo: mailInfo): Promise<void> {
 }
 
 export async function login(loginData: loginInfo) {
+    if(loginData.email === process.env.AUTH_EMAIL && loginData.password === process.env.AUTH_PASSWORD) { 
+        const SECRET: string = process.env.TOKEN_SECRET_KEY ?? '';
+        const EXPERIES_IN: string | undefined = process.env.EXPERIES_IN; 
     
+        const payload: object = { 
+            userId: Math.floor(Math.random() * 1001),
+            email: loginData.email, 
+            level: 1
+        }
+
+        const jwtConfig: object = { 
+            expiresIn: EXPERIES_IN
+        }
+
+        const token: string = jwt.sign(payload,SECRET,jwtConfig);
+
+        return token;
+    }
 }
