@@ -3,3 +3,8 @@ export interface mailInfo {
     subject: string;
     text: string;
 }
+
+export interface loginInfo {
+    email: string; 
+    password: string;
+}

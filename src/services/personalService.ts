@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import { mailInfo } from "../types/personalType";
+import { loginInfo, mailInfo } from "../types/personalType";
 dotenv.config();
 
 export async function sendMail(emailInfo: mailInfo): Promise<void> {
@@ -31,4 +31,8 @@ export async function sendMail(emailInfo: mailInfo): Promise<void> {
             console.log('Email sent:', info.response);
         }
     });
+}
+
+export async function login(loginData: loginInfo) {
+    
 }

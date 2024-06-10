@@ -8,5 +8,4 @@ const personalRouter = Router();
 personalRouter.post("/email",personalController.sendEmail);
 personalRouter.post("/auth",schemaValidator(personalSchema), personalController.login);
 
-
 export default personalRouter;
