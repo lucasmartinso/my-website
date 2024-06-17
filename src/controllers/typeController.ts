@@ -13,5 +13,13 @@ export async function postTypes(req: Request, res: Response): Promise<void> {
     
     await typeService.postTypes(name);
 
-    res.status(201).send('Novo tipo criado');
+    res.status(201).send('Novo tipo criado com sucesso');
+}
+
+export async function deleteTypes(req: Request, res: Response): Promise<void> {
+    const id: number = Number(req.params.id);
+    
+    await typeService.deleteType(id);
+
+    res.status(200).send('Tipo deletado com sucesso');
 }
