@@ -22,3 +22,11 @@ export async function deleteType(id: number): Promise<void> {
 
     await typeRepository.deleteType(id);
 }
+
+export async function updateType(id: number, name: string): Promise<void> {
+    const existType: ptype[] = await typeRepository.existType(id);
+
+    if(existType) throw { type: "Conflit", message: "Tipo não existente"}
+
+    await typeRepository.updateType(id,name);
+}
