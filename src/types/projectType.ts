@@ -7,7 +7,7 @@ export enum types {
 export interface projectInfo { 
     id: number;
     name: string;
-    type: types;
+    type: string;
     image: string; 
     description: string; 
     url: string | null; 
@@ -20,7 +20,7 @@ export interface projectInfo {
 export interface projectComplete { 
     id: number;
     name: string;
-    type: types;
+    type: string;
     image: string; 
     description: string; 
     url: string | null; 
