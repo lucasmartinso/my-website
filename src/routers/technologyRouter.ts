@@ -4,12 +4,12 @@ import schemaValidator from "../middlewares/schemaValidator";
 import { technologySchema } from "../schemas/technologySchema";
 import { validateTokenAuth } from "../middlewares/authMiddleware";
 
-const projectRouter = Router(); 
+const technologyRouter = Router(); 
 
-projectRouter.get("/techs", technologyController.getTechnologies);
-projectRouter.post("/techs", schemaValidator(technologySchema), validateTokenAuth, technologyController.addTechnology);
-projectRouter.post("/techs/search", technologyController.searchTech);
-projectRouter.delete("/delete/techs/:id", validateTokenAuth, technologyController.deleteTechnology);
-projectRouter.put("/edit/techs/:id", schemaValidator(technologySchema), validateTokenAuth, technologyController.updateTechnology);
+technologyRouter.get("/techs", technologyController.getTechnologies);
+technologyRouter.post("/techs", schemaValidator(technologySchema), validateTokenAuth, technologyController.addTechnology);
+technologyRouter.post("/techs/search", technologyController.searchTech);
+technologyRouter.delete("/delete/techs/:id", validateTokenAuth, technologyController.deleteTechnology);
+technologyRouter.put("/edit/techs/:id", schemaValidator(technologySchema), validateTokenAuth, technologyController.updateTechnology);
 
-export default projectRouter;
+export default technologyRouter;
