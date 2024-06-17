@@ -4,8 +4,9 @@ import { EnumObject, projectComplete, projectInfo, types } from "../types/projec
 
 export async function getProjects(): Promise<projectInfo[]> {
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
-        SELECT id, name, type, image, url, pinned 
-        FROM "project"
+        SELECT p.id, p.name, p.name AS type, p.image, p.url, p.pinned 
+        FROM "project" p 
+        JOIN "type" t ON p."typeId" = t.id
     `); 
 
     return projects;
@@ -91,12 +92,12 @@ export async function repeteadBack(back: string | null): Promise<projectInfo[]> 
     return existBack;
 }
 
-export async function addProject(project: projectComplete): Promise<void> {
+export async function addProject(project: projectComplete, typeId: number): Promise<void> {
     await connection.query(`
         INSERT INTO "project"
-        (name, type, image, description, url, documentation, front, back, pinned) 
+        (name, image, description, url, documentation, front, back, pinned, "typeId") 
         VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)
-    `,[project.name,project.type,project.image,project.description,project.url,project.documentation,project.front,project.back,project.pinned]); 
+    `,[project.name,project.image,project.description,project.url,project.documentation,project.front,project.back,project.pinned,typeId]); 
 } 
 
 export async function deleteProject(id: number): Promise<void> {

@@ -1,7 +1,9 @@
 import { EnumObject, projectComplete, projectInfo, types } from "../types/projectType";
 import * as projectRepository from "../repositories/projectRepository";
 import * as technologyRepository from "../repositories/technologyRepository";
+import * as typeRepository from "../repositories/typeRepository";
 import { technology } from "../types/technologyType";
+import { ptype } from "../types/typeType";
 
 export async function getProjects(type: any | undefined): Promise<projectInfo[]> { 
     let projects: projectInfo[];
@@ -44,6 +46,9 @@ export async function getProjectType() {
 
 export async function addProject(project: projectComplete): Promise<void> { 
     if(!project.technologies.length) throw { type: "Unprocessable Entity", message:"Necessário cadastrar ao menos uma tecnologia"}
+    
+    const existType: ptype[] = await typeRepository.existNameType(project.type);
+    if(!existType.length) throw { type: "Unauthorized", message: "Tipo não cadastrado, necessario escolher um tipo já cadastrado"}
 
     const [
         repeteadName, 
@@ -65,7 +70,7 @@ export async function addProject(project: projectComplete): Promise<void> {
     // const exist: projectInfo[] = await projectRepository.verifyRepeteadFields(project);
     // if(exist) throw { type: "Conflit", message: "Campos nome, url, front ou back já existentes"}
 
-    await projectRepository.addProject(project);
+    await projectRepository.addProject(project, existType[0].id);
     const projectId: projectInfo[] = await projectRepository.repeteadName(project.name);
     
     //adiciona as techIds associadas ao projedtId na tabela intermediaria 
