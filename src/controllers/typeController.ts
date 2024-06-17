@@ -7,3 +7,11 @@ export async function getTypes(req: Request, res: Response): Promise<void> {
 
     res.status(200).send(types);
 }
+
+export async function postTypes(req: Request, res: Response): Promise<void> {
+    const { name }: { name: string } = req.body;
+    
+    await typeService.postTypes(name);
+
+    res.status(201).send('Novo tipo criado');
+}
