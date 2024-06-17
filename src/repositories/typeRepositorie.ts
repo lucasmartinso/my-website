@@ -25,3 +25,10 @@ export async function postType(name: string): Promise<void> {
         VALUES ($1)
     `,[name]); 
 }
+
+export async function deleteType(id: number): Promise<void> {
+    await connection.query(`
+        DELETE FROM "type"
+        WHERE id = $1
+    `,[id]); 
+}
