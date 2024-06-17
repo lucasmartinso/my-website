@@ -1,9 +1,7 @@
-import { technology } from "./technologyType";
-
 export enum types { 
     web = "web", 
     notebook = "notebook",
-    ai = "ai"
+    ia = "ia"
 } 
 
 export interface projectInfo { 

@@ -1,13 +1,13 @@
 import * as technologyRepository from "../repositories/technologyRepository"; 
 import { technology } from "../types/technologyType";
 
-export async function getTecnologies() {
+export async function getTecnologies(): Promise<technology[]> {
     const technologies: technology[] = await technologyRepository.getTecnologies();
 
     return technologies;
 }
 
-export async function addTechnology(technology: technology) {
+export async function addTechnology(technology: technology): Promise<void> {
     const repetadTech: technology[] = await technologyRepository.getTecnologyName(technology.name);
 
     if(repetadTech.length) throw { type: "Conflit", message:"Tecnologia já cadastrada"}
@@ -15,7 +15,7 @@ export async function addTechnology(technology: technology) {
     await technologyRepository.addTechnology(technology.name);
 }
 
-export async function deleteTechnology(id: number) {
+export async function deleteTechnology(id: number): Promise<void> {
     const existTech: technology[] = await technologyRepository.getTecnologyId(id);
 
     if(!existTech.length) throw { type: "Not Found", message:"Tecnologia não existe na base de dados"}
@@ -24,7 +24,7 @@ export async function deleteTechnology(id: number) {
     await technologyRepository.deleteTechnology(id);
 }
 
-export async function updateTechnology(id: number, technology: technology) {
+export async function updateTechnology(id: number, technology: technology): Promise<void> {
     const [
         existTech, 
         repeteadName
@@ -37,4 +37,10 @@ export async function updateTechnology(id: number, technology: technology) {
     if(repeteadName.length) throw { type: "Conflit", message:"Tecnologia já existente com esse nome"}
 
     await technologyRepository.updateTechnology(id, technology);
+} 
+
+export async function searchTech(tech: string): Promise<technology[]> {
+    const technologies: technology[] = await technologyRepository.searchTechs(tech);
+
+    return technologies;
 }

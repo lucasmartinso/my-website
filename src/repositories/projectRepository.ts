@@ -26,6 +26,8 @@ export async function getPinnedProjects(): Promise<projectInfo[]> {
         SELECT id, name, type, image, url, pinned 
         FROM "project" 
         WHERE "pinned" = $1
+        ORDER BY id ASC
+        OFFSET 0 LIMIT 8
     `,[true]);
     
     return projects;

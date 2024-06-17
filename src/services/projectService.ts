@@ -1,4 +1,4 @@
-import { EnumObject, projectComplete, projectInfo } from "../types/projectType";
+import { EnumObject, projectComplete, projectInfo, types } from "../types/projectType";
 import * as projectRepository from "../repositories/projectRepository";
 import * as technologyRepository from "../repositories/technologyRepository";
 import { technology } from "../types/technologyType";
@@ -35,6 +35,12 @@ export async function getProjectInfo(id: number): Promise<projectComplete> {
 
     return projectInfos[0];
 } 
+
+export async function getProjectType() {
+    const types: EnumObject[] = await projectRepository.getTypes();
+
+    return types;
+}
 
 export async function addProject(project: projectComplete): Promise<void> { 
     if(!project.technologies.length) throw { type: "Unprocessable Entity", message:"Necessário cadastrar ao menos uma tecnologia"}
