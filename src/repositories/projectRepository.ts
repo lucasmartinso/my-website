@@ -14,9 +14,10 @@ export async function getProjects(): Promise<projectInfo[]> {
 
 export async function getProjectsType(type: string): Promise<projectInfo[]> {
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
-        SELECT id, name, type, image, url, pinned 
-        FROM "project"
-        WHERE "type" = $1
+    SELECT p.id, p.name, t.name AS type, p.image, p.url, p.pinned 
+    FROM "project" p 
+    JOIN "type" t ON p."typeId" = t.id 
+    WHERE t.name = $1
     `,[type]); 
 
     return projects;
