@@ -14,3 +14,11 @@ export async function postTypes(name: string): Promise<void> {
 
     await typeRepository.postType(name);
 }
+
+export async function deleteType(id: number): Promise<void> {
+    const existType: ptype[] = await typeRepository.existType(id);
+
+    if(existType) throw { type: "Conflit", message: "Tipo não existente"}
+
+    await typeRepository.deleteType(id);
+}
