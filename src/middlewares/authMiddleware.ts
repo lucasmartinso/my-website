@@ -7,16 +7,16 @@ export async function validateTokenAuth(req: Request, res: Response, next: NextF
     const Authorization = req.headers.authorization;
     const token = Authorization?.replace("Bearer ", "");
 
-    if(!token) throw { type: "Unauthorized", message: "Acesso bloqueado 1, autorização necessária"} 
+    if(!token) throw { type: "Unauthorized", message: "Acesso bloqueado, autorização necessária"} 
 
     try {
         const SECRET: string = process.env.TOKEN_SECRET_KEY ?? '';
         const { email } = jwt.verify(token,SECRET) as { email: string }
         if(email !== process.env.AUTH_EMAIL) { 
-            throw { type: "Unauthorized", message: "Acesso bloqueado 2, autorização necessária"};
+            throw { type: "Unauthorized", message: "Acesso bloqueado, autorização necessária"};
         }
         next();
     } catch (error) {
-        throw { type: "Unauthorized", message: "Acesso bloqueado 3, autorização necessária"};
+        throw { type: "Unauthorized", message: "Acesso bloqueado, autorização necessária"};
     }
 }
