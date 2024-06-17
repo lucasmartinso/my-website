@@ -19,6 +19,15 @@ export async function existNameType(type: string): Promise<ptype[]> {
     return existName;
 }
 
+export async function existType(id: number): Promise<ptype[]> {
+    const { rows: existType }: QueryResult<ptype> = await connection.query(`
+        SELECT * FROM "type"
+        WHERE id = $1
+    `,[id]); 
+
+    return existType;
+}
+
 export async function postType(name: string): Promise<void> {
     await connection.query(`
         INSERT INTO "type" (name) 
@@ -31,4 +40,12 @@ export async function deleteType(id: number): Promise<void> {
         DELETE FROM "type"
         WHERE id = $1
     `,[id]); 
+}
+
+export async function updateType(id: number, name: string): Promise<void> {
+    await connection.query(`
+        UPDATE "type"
+        SET name = $2
+        WHERE id = $1
+    `,[id,name]); 
 }
