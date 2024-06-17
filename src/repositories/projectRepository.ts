@@ -99,14 +99,14 @@ export async function addProject(project: projectComplete): Promise<void> {
     `,[project.name,project.type,project.image,project.description,project.url,project.documentation,project.front,project.back,project.pinned]); 
 } 
 
-export async function deleteProject(id: number) {
+export async function deleteProject(id: number): Promise<void> {
     await connection.query(`
         DELETE FROM "project" 
         WHERE id = $1
     `,[id]);
 } 
 
-export async function updateProject(id: number, project: Omit<projectComplete, 'id'>) {
+export async function updateProject(id: number, project: Omit<projectComplete, 'id'>): Promise<void> {
     await connection.query(`
         UPDATE "project" 
         SET name = $2, type = $3, image = $4, description = $5, url = $6, documentation = $7, front = $8, back = $9, pinned = $10
