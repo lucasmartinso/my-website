@@ -23,3 +23,12 @@ export async function deleteTypes(req: Request, res: Response): Promise<void> {
 
     res.status(200).send('Tipo deletado com sucesso');
 }
+
+export async function updateTypes(req: Request, res: Response): Promise<void> {
+    const id: number = Number(req.params.id);
+    const { name }: { name: string } = req.body;
+    
+    await typeService.updateType(id,name);
+
+    res.status(200).send('Tipo atualizado com sucesso');
+}
