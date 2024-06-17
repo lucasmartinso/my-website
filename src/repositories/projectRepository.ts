@@ -4,7 +4,7 @@ import { EnumObject, projectComplete, projectInfo, types } from "../types/projec
 
 export async function getProjects(): Promise<projectInfo[]> {
     const { rows: projects }: QueryResult<projectInfo> = await connection.query(`
-        SELECT p.id, p.name, p.name AS type, p.image, p.url, p.pinned 
+        SELECT p.id, p.name, t.name AS type, p.image, p.url, p.pinned 
         FROM "project" p 
         JOIN "type" t ON p."typeId" = t.id
     `); 
