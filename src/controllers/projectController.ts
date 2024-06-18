@@ -22,12 +22,6 @@ export async function getProjectInfo(req: Request, res: Response): Promise<void>
     res.status(200).send(project);
 }
 
-export async function getProjectTypes(req: Request, res: Response): Promise<void> {
-    const types: EnumObject[] = await projectService.getProjectType(); 
-    
-    res.status(200).send(types);
-}
-
 export async function addProject(req: Request, res: Response): Promise<void> {
     const project: projectComplete = req.body;
     await projectService.addProject(project);
