@@ -1,19 +1,19 @@
-import { EnumObject, projectComplete, projectInfo, types } from "../types/projectType";
+import { projectComplete, projectInfo } from "../types/projectType";
 import * as projectRepository from "../repositories/projectRepository";
 import * as technologyRepository from "../repositories/technologyRepository";
 import * as typeRepository from "../repositories/typeRepository";
 import { technology } from "../types/technologyType";
 import { ptype } from "../types/typeType";
 
-export async function getProjects(type: any | undefined): Promise<projectInfo[]> { 
+export async function getProjects(type: string | undefined): Promise<projectInfo[]> { 
     let projects: projectInfo[];
 
     if(!type) {
         projects = await projectRepository.getProjects();
         if(!projects.length) throw { type: "Not Found", message:"Nenhum projeto encontrado na base de dados"}
     } else { 
-        const types: EnumObject[] = await projectRepository.getTypes();
-        if(!types.some((str: EnumObject) => str.enumlabel == type)) throw { type: "Bad Request", message:"Tipo inexistente"} 
+        const types: ptype[] = await typeRepository.existNameType(type);
+        if(!types.length) throw { type: "Bad Request", message:"Tipo inexistente"} 
         
         projects = await projectRepository.getProjectsType(type);
         if(!projects.length) throw { type: "Not Found", message:"Nenhum projeto registrado com esse tipo ainda"}
@@ -37,12 +37,6 @@ export async function getProjectInfo(id: number): Promise<projectComplete> {
 
     return projectInfos[0];
 } 
-
-export async function getProjectType() {
-    const types: EnumObject[] = await projectRepository.getTypes();
-
-    return types;
-}
 
 export async function addProject(project: projectComplete): Promise<void> { 
     if(!project.technologies.length) throw { type: "Unprocessable Entity", message:"Necessário cadastrar ao menos uma tecnologia"}
@@ -98,9 +92,13 @@ export async function deleteProject(id: number) {
 export async function updateProject(id: number, project: Omit<projectComplete, 'id'>) {
     const candidateUpdate: projectComplete[] = await projectRepository.getProjectInfo(id);
 
-    if(!candidateUpdate.length) throw { type: "Not Found", message:"Esse projeto sofreu modificação ou não existe mais, pesquise-o novamente"}
+    console.log(candidateUpdate);
+    if(!candidateUpdate.length) throw { type: "Not Found", message:"Esse projeto não existe mais, pesquise-o novamente"}
     
     if(!project.technologies.length) throw { type: "Unprocessable Entity", message:"Necessário cadastrar ao menos uma tecnologia"}
+    
+    const existType: ptype[] = await typeRepository.existNameType(project.type);
+    if(!existType.length) throw { type: "Unauthorized", message: "Tipo não cadastrado, necessario escolher um tipo já cadastrado"}
 
     const [
         repeteadName, 
@@ -140,5 +138,5 @@ export async function updateProject(id: number, project: Omit<projectComplete, '
         }
     });
 
-    await projectRepository.updateProject(id, project);
+    await projectRepository.updateProject(id, project, existType[0].id);
 } 
