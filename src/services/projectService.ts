@@ -55,7 +55,7 @@ export async function addProject(project: projectComplete): Promise<void> {
         projectRepository.repeteadFront(project.front),
         projectRepository.repeteadBack(project.back)
     ])
-
+ 
     if(repeteadName.length) throw { type: "Conflit", message: "Nome já existente"}
     if(repeteadUrl.length) throw { type: "Conflit", message: "Url do deploy já existente"}
     if(repeteadFront.length) throw { type: "Conflit", message: "Url do front já existente"}
@@ -112,6 +112,8 @@ export async function updateProject(id: number, project: Omit<projectComplete, '
         projectRepository.repeteadBack(project.back)
     ])
 
+    console.log(project.front); 
+    console.log(candidateUpdate[0].front);
     if(repeteadName.length && project.name !== candidateUpdate[0].name) throw { type: "Conflit", message: "Nome já existente"}
     if(repeteadUrl.length && project.url !== candidateUpdate[0].url) throw { type: "Conflit", message: "Url do deploy já existente"}
     if(repeteadFront.length && project.front !== candidateUpdate[0].front) throw { type: "Conflit", message: "Url do front já existente"}
