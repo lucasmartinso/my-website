@@ -62,7 +62,6 @@ export async function creation(req: Request, res: Response): Promise<void> {
         console.log(error);
         res.status(401).send(error);
     }
-   
 
     res.status(200).send("Tabelas criadas");
 }
