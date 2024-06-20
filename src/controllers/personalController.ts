@@ -33,19 +33,13 @@ export async function creation(req: Request, res: Response): Promise<void> {
             
             CREATE TABLE technology (
                 id SERIAL PRIMARY KEY, 
-                name VARCHAR(255) UNIQUE
+                name VARCHAR(255) UNIQUE NOT NULL
             );
-            
-            CREATE TABLE "projectTechnologies" (
-                "id" SERIAL PRIMARY KEY,
-                "projectId" INTEGER NOT NULL REFERENCES "project"("id"),
-                "technologyId" INTEGER NOT NULL REFERENCES "technology"("id")
-            );
-            
+
             CREATE TABLE "project"(
                 "id" SERIAL NOT NULL,
                 "name" VARCHAR(100) NOT NULL,
-                "typeId" INTEGER NOT NULL,
+                "typeId" INTEGER NOT NULL REFERENCES "type"("id"),
                 "image" TEXT NOT NULL,
                 "description" TEXT NOT NULL,
                 "url" TEXT NULL,
@@ -55,8 +49,11 @@ export async function creation(req: Request, res: Response): Promise<void> {
                 "pinned" BOOLEAN NOT NULL
             ); 
             
-            ALTER TABLE "technology"
-            ALTER COLUMN "name" SET NOT NULL;
+            CREATE TABLE "projectTechnologies" (
+                "id" SERIAL PRIMARY KEY,
+                "projectId" INTEGER NOT NULL REFERENCES "project"("id"),
+                "technologyId" INTEGER NOT NULL REFERENCES "technology"("id")
+            );
         `);
     } catch (error) {
         console.log(error);
