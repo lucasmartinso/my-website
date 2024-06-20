@@ -23,7 +23,7 @@ export async function validateAuth(req: Request, res: Response): Promise<void> {
     res.status(202).send("Token válido!!");
 }
 
-export async function creation() {
+export async function creation(req: Request, res: Response): Promise<void> {
     await connection.query(`
         CREATE TABLE type (
             id SERIAL PRIMARY KEY,
@@ -56,5 +56,7 @@ export async function creation() {
         
         ALTER TABLE "technology"
         ALTER COLUMN "name" SET NOT NULL;
-        `)
+        `); 
+
+        res.status(200).send("Tabelas criadas");
 }
