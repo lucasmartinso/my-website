@@ -37,7 +37,7 @@ export async function creation(req: Request, res: Response): Promise<void> {
             );
 
             CREATE TABLE "project"(
-                "id" SERIAL NOT NULL,
+                "id" SERIAL PRIMARY KEY,
                 "name" VARCHAR(100) NOT NULL,
                 "typeId" INTEGER NOT NULL REFERENCES "type"("id"),
                 "image" TEXT NOT NULL,
