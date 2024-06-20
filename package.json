@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
+  "engines": {
+    "node": "18"
+  },
   "scripts": {
     "build": "tsc",
     "start": "npm run ts-node src/server.ts",
