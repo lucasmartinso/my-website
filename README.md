@@ -167,7 +167,7 @@ POST /projects (autentify)
     - headers: { "Authorization": `Bearer $token` }
     - body: {
         "name": "Lorem Ipsum",
-        "type": "lorem" (select a type),
+        "typeId": number (select a type),
         "image": "https://lorem.png",
         "description": "lorem ipsum ...",
         "url"?: "https://lorem.com",
@@ -193,7 +193,7 @@ PUT /edit/projects/:id (autentify)
     - params: id(number)
     - body: {
         "name": "Lorem Ipsum",
-        "type": "lorem" (select a type),
+        "typeId": number (select a type),
         "image": "https://lorem.png",
         "description": "lorem ipsum ...",
         "url"?: "https://lorem.com",
