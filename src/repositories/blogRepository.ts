@@ -18,10 +18,17 @@ export async function postBlog(blogData: Omit<blogInfo, 'id'>): Promise<void> {
     `,[blogData.tittle,blogData.description,blogData.tittle]);
 }
 
-export async function updateBlog(params:type) {
-    
+export async function updateBlog(id: number, blogData: Omit<blogInfo, 'id'>): Promise<void> {
+    await connection.query(`
+        UPDATE "blog" 
+        SET tittle = $2, description = $3, text = $4
+        WHERE id = $1   
+    `,[id, blogData.tittle, blogData.description, blogData.text]);
 }
 
 export async function deleteBlog(id: number): Promise<void> {
-    connection
+    await connection.query(`
+        DELETE FROM "blog" 
+        WHERE id = $1    
+    `,[id]);
 }
