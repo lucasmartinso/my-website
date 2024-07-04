@@ -42,7 +42,7 @@ export async function postBlog(blogData: blogInfo): Promise<void> {
     await blogRepositories.postBlog(blogData);
 }
 
-export async function updateBlog(id: number, blogData: blogInfo) {
+export async function updateBlog(id: number, blogData: blogInfo): Promise<void> {
     const existBlog = await blogRepositories.getBlogId(id);
     if(!existBlog.length) throw { type: "Conflit", message: "Blog inexistente"}
 
@@ -53,6 +53,9 @@ export async function updateBlog(id: number, blogData: blogInfo) {
     await blogRepositories.updateBlog(id, blogData);
 }
 
-export async function deleteBlog() {
-    
+export async function deleteBlog(id: number): Promise<void> {
+    const existBlog = await blogRepositories.getBlogId(id);
+    if(!existBlog.length) throw { type: "Conflit", message: "Blog inexistente"}
+
+    await blogRepositories.deleteBlog(id);
 }
