@@ -17,7 +17,7 @@ function getRandomNumbers(max: number): number[] {
     return randomNumbers;
 }
 
-export async function getRandomBlogs() {
+export async function getRandomBlogs(): Promise<blogInfo[]> {
     const blogs: blogInfo[] = await blogRepositories.getSelectBlog();
 
     if(blogs.length > 3) { 
@@ -34,7 +34,7 @@ export async function getRandomBlogs() {
     return blogs;
 }
 
-export async function postBlog() {
+export async function postBlog(blogData: blogInfo) {
     
 }
 

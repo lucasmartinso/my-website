@@ -32,6 +32,15 @@ export async function getBlogId(id: number): Promise<blogInfo[]> {
     return blogs;
 }
 
+export async function getBlogTittle(tittle: string): Promise<blogInfo[]> {
+    const { rows: blogs }: QueryResult<blogInfo> = await connection.query(`
+        SELECT * FROM "blog"  
+        WHERE tittle = $1
+    `,[tittle]);
+
+    return blogs;
+}
+
 export async function postBlog(blogData: Omit<blogInfo, 'id'>): Promise<void> {
     await connection.query(` 
         INSERT INTO "blog" 
