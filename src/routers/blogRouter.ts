@@ -10,7 +10,7 @@ blogRouter.get("/blogs", blogController.getBlogs);
 blogRouter.get("/blogs/random", blogController.getRandomBlogs);
 blogRouter.get("/blogs/:id", blogController.getCompleteBlog);
 blogRouter.post("/blogs", validateTokenAuth, schemaValidator(blogSchema),blogController.postBlog);
-blogRouter.put("/edit/blogs/:id", validateTokenAuth, schemaValidator(blogSchema), blogController.postBlog);
-blogRouter.delete("/delete/blogs/:id", validateTokenAuth, blogController.postBlog);
+blogRouter.put("/edit/blogs/:id", validateTokenAuth, schemaValidator(blogSchema), blogController.updateBlog);
+blogRouter.delete("/delete/blogs/:id", validateTokenAuth, blogController.deleteBlog);
 
 export default blogRouter;
