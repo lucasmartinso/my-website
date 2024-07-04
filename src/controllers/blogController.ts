@@ -9,7 +9,9 @@ export async function getBlogs(req: Request, res: Response): Promise<void> {
 }
 
 export async function getRandomBlogs(req: Request, res: Response): Promise<void> {
-    
+    const blogs: blogInfo[] = await blogService.getRandomBlogs(); 
+
+    res.status(200).send(blogs);
 }
 
 export async function postBlog(req: Request, res: Response): Promise<void> {
