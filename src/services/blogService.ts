@@ -34,6 +34,15 @@ export async function getRandomBlogs(): Promise<blogInfo[]> {
     return blogs;
 }
 
+export async function getCompleteBlog(id: number): Promise<blogInfo[]> {
+    const existBlog = await blogRepositories.getBlogId(id);
+    if(!existBlog.length) throw { type: "Conflit", message: "Blog inexistente"}
+
+    const blog: blogInfo[] = await blogRepositories.getBlogId(id);
+
+    return blog;
+}
+
 export async function postBlog(blogData: Omit<blogInfo, 'id'>): Promise<void> {
     const repeteadTittle = await blogRepositories.getBlogTittle(blogData.tittle);
 

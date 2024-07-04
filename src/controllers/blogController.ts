@@ -14,6 +14,12 @@ export async function getRandomBlogs(req: Request, res: Response): Promise<void>
     res.status(200).send(blogs);
 }
 
+export async function getCompleteBlog(req: Request, res: Response): Promise<void> {
+    const id: number = Number(req.params.id);
+
+    res.status(200).send(blogs);
+}
+
 export async function postBlog(req: Request, res: Response): Promise<void> {
     const blogData: Omit<blogInfo, 'id'> = req.body;
    
