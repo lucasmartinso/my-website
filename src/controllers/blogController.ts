@@ -26,11 +26,15 @@ export async function updateBlog(req: Request, res: Response): Promise<void> {
     const id: number = Number(req.params.id);
     const blogData: Omit<blogInfo, 'id'> = req.body;
    
-    await blogService.postBlog(blogData); 
+    await blogService.updateBlog(id, blogData); 
 
     res.status(200).send("Blog editado com sucesso");
 }
 
 export async function deleteBlog(req: Request, res: Response): Promise<void> {
-    
+    const id: number = Number(req.params.id);
+   
+    await blogService.deleteBlog(id); 
+
+    res.status(200).send("Blog deletado com sucesso");
 }
