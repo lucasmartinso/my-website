@@ -7,10 +7,20 @@ export async function getBlogs(): Promise<blogInfo[]> {
     return blogs;
 }
 
-export async function getRandomBlogs() {
-    const blogs: blogInfo[] = await blogRepositories.getBlogs();
+function getRandomNumbers(max: number) { 
+    const randomNumbers = []; 
 
-    if(blogs.length) { 
+    for(let i=0; i<3; i++) { 
+        randomNumbers.push(Math.floor(Math.random() * (max - 0 + 1)) + 0);
+    }
+
+    return randomNumbers;
+}
+
+export async function getRandomBlogs() {
+    const blogs: blogInfo[] = await blogRepositories.getSelectBlog();
+
+    if(blogs.length > 3) { 
         
     }
 
