@@ -46,7 +46,7 @@ export async function postBlog(blogData: Omit<blogInfo, 'id'>): Promise<void> {
         INSERT INTO "blog" 
         (tittle, description, text)  
         VALUES ($1,$2,$3)  
-    `,[blogData.tittle,blogData.description,blogData.tittle]);
+    `,[blogData.tittle,blogData.description,blogData.text]);
 }
 
 export async function updateBlog(id: number, blogData: Omit<blogInfo, 'id'>): Promise<void> {
