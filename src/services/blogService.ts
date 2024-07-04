@@ -8,7 +8,13 @@ export async function getBlogs(): Promise<blogInfo[]> {
 }
 
 export async function getRandomBlogs() {
-    
+    const blogs: blogInfo[] = await blogRepositories.getBlogs();
+
+    if(blogs.length) { 
+        
+    }
+
+    return blogs;
 }
 
 export async function postBlog() {

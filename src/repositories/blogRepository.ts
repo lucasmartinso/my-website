@@ -10,6 +10,17 @@ export async function getBlogs(): Promise<blogInfo[]> {
     return blogs;
 }
 
+export async function getSelectBlog(): Promise<blogInfo[]> {
+    const { rows: blogs }: QueryResult<blogInfo> = await connection.query(`
+        SELECT id, tittle, description
+        FROM "blog"  
+        OFFSET 0 LIMIT 10
+        ORDER BY id DESC
+    `)
+
+    return blogs;
+}
+
 export async function postBlog(blogData: Omit<blogInfo, 'id'>): Promise<void> {
     await connection.query(` 
         INSERT INTO "blog" 
