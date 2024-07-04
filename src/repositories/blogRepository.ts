@@ -5,7 +5,8 @@ import { blogInfo } from "../types/blogType";
 export async function getBlogs(): Promise<blogInfo[]> {
     const { rows: blogs }: QueryResult<blogInfo> = await connection.query(`
         SELECT id, tittle, description
-        FROM "blog"    
+        FROM "blog"
+        ORDER BY id DESC    
     `)
 
     return blogs;
