@@ -4,7 +4,8 @@ import { blogInfo } from "../types/blogType";
 
 export async function getBlogs(): Promise<blogInfo[]> {
     const { rows: blogs }: QueryResult<blogInfo> = await connection.query(`
-        SELECT * FROM "blog"    
+        SELECT id, tittle, description
+        FROM "blog"    
     `)
 
     return blogs;
@@ -14,9 +15,18 @@ export async function getSelectBlog(): Promise<blogInfo[]> {
     const { rows: blogs }: QueryResult<blogInfo> = await connection.query(`
         SELECT id, tittle, description
         FROM "blog"  
-        OFFSET 0 LIMIT 10
         ORDER BY id DESC
+        OFFSET 0 LIMIT 10
     `)
+
+    return blogs;
+}
+
+export async function getBlogId(id: number): Promise<blogInfo[]> {
+    const { rows: blogs }: QueryResult<blogInfo> = await connection.query(`
+        SELECT * FROM "blog"  
+        WHERE id = $1
+    `,[id]);
 
     return blogs;
 }
