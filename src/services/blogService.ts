@@ -7,7 +7,7 @@ export async function getBlogs(): Promise<blogInfo[]> {
     return blogs;
 }
 
-function getRandomNumbers(max: number) { 
+function getRandomNumbers(max: number): number[] { 
     const randomNumbers = []; 
 
     for(let i=0; i<3; i++) { 
@@ -21,7 +21,14 @@ export async function getRandomBlogs() {
     const blogs: blogInfo[] = await blogRepositories.getSelectBlog();
 
     if(blogs.length > 3) { 
-        
+        const random: number[] = getRandomNumbers(blogs.length-1);
+        const randBlogs: blogInfo[] = [];
+
+        for(let i=0; i<3; i++) { 
+            randBlogs.push(blogs[random[i]]);
+        }
+
+        return randBlogs;
     }
 
     return blogs;
