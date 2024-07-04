@@ -34,7 +34,7 @@ export async function getRandomBlogs(): Promise<blogInfo[]> {
     return blogs;
 }
 
-export async function postBlog(blogData: blogInfo): Promise<void> {
+export async function postBlog(blogData: Omit<blogInfo, 'id'>): Promise<void> {
     const repeteadTittle = await blogRepositories.getBlogTittle(blogData.tittle);
 
     if(repeteadTittle.length) throw { type: "Conflit", message: "Titulo já existente"}
@@ -42,7 +42,7 @@ export async function postBlog(blogData: blogInfo): Promise<void> {
     await blogRepositories.postBlog(blogData);
 }
 
-export async function updateBlog(id: number, blogData: blogInfo): Promise<void> {
+export async function updateBlog(id: number, blogData: Omit<blogInfo, 'id'>): Promise<void> {
     const existBlog = await blogRepositories.getBlogId(id);
     if(!existBlog.length) throw { type: "Conflit", message: "Blog inexistente"}
 
