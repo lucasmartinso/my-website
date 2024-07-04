@@ -36,7 +36,7 @@ export async function getRandomBlogs(): Promise<blogInfo[]> {
 
 export async function getCompleteBlog(id: number): Promise<blogInfo[]> {
     const existBlog = await blogRepositories.getBlogId(id);
-    if(!existBlog.length) throw { type: "Conflit", message: "Blog inexistente"}
+    if(!existBlog.length) throw { type: "Not Found", message: "Blog inexistente"}
 
     const blog: blogInfo[] = await blogRepositories.getBlogId(id);
 
@@ -53,7 +53,7 @@ export async function postBlog(blogData: Omit<blogInfo, 'id'>): Promise<void> {
 
 export async function updateBlog(id: number, blogData: Omit<blogInfo, 'id'>): Promise<void> {
     const existBlog = await blogRepositories.getBlogId(id);
-    if(!existBlog.length) throw { type: "Conflit", message: "Blog inexistente"}
+    if(!existBlog.length) throw { type: "Not Found", message: "Blog inexistente"}
 
 
     const repeteadTittle = await blogRepositories.getBlogTittle(blogData.tittle);
@@ -64,7 +64,7 @@ export async function updateBlog(id: number, blogData: Omit<blogInfo, 'id'>): Pr
 
 export async function deleteBlog(id: number): Promise<void> {
     const existBlog = await blogRepositories.getBlogId(id);
-    if(!existBlog.length) throw { type: "Conflit", message: "Blog inexistente"}
+    if(!existBlog.length) throw { type: "Not Found", message: "Blog inexistente"}
 
     await blogRepositories.deleteBlog(id);
 }
