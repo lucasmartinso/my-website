@@ -34,12 +34,23 @@ export async function getRandomBlogs(): Promise<blogInfo[]> {
     return blogs;
 }
 
-export async function postBlog(blogData: blogInfo) {
-    
+export async function postBlog(blogData: blogInfo): Promise<void> {
+    const repeteadTittle = await blogRepositories.getBlogTittle(blogData.tittle);
+
+    if(repeteadTittle.length) throw { type: "Conflit", message: "Titulo já existente"}
+
+    await blogRepositories.postBlog(blogData);
 }
 
-export async function updateBlog() {
-    
+export async function updateBlog(id: number, blogData: blogInfo) {
+    const existBlog = await blogRepositories.getBlogId(id);
+    if(!existBlog.length) throw { type: "Conflit", message: "Blog inexistente"}
+
+
+    const repeteadTittle = await blogRepositories.getBlogTittle(blogData.tittle);
+    if(repeteadTittle.length) throw { type: "Conflit", message: "Titulo já existente"}
+
+    await blogRepositories.updateBlog(id, blogData);
 }
 
 export async function deleteBlog() {
