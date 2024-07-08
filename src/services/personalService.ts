@@ -48,8 +48,6 @@ export async function sendMail(emailInfo: mailInfo): Promise<void> {
         if (error) {
           console.error('Error sending email:', error);
           throw { type: "Bad Request", message: `Erro: ${error}` }
-        } else {
-            console.log('Email sent:', info.response);
         }
     });
 }
