@@ -101,7 +101,7 @@ export async function addProject(project: projectComplete, typeId: number): Prom
     await connection.query(`
         INSERT INTO "project"
         (name, image, description, url, documentation, front, back, pinned, "typeId") 
-        VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
     `,[project.name,project.image,project.description,project.url,project.documentation,project.front,project.back,project.pinned,typeId]); 
 } 
 

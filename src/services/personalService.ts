@@ -18,11 +18,12 @@ export async function sendMail(emailInfo: mailInfo): Promise<void> {
     const mailOptions = {
         from: emailInfo.email,
         to: process.env.EMAIL,
-        subject: emailInfo.email,
-        text: emailInfo.text
+        subject: emailInfo.subject,
+        html: `
+            <h2>Email enviado por ${emailInfo.email}</h2>
+            <p>${emailInfo.text}</p>
+            `
     };
-
-    console.log(mailOptions);
 
     await transport.sendMail(mailOptions, (error, info) => {
         if (error) {
@@ -30,6 +31,23 @@ export async function sendMail(emailInfo: mailInfo): Promise<void> {
           throw { type: "Bad Request", message: `Erro: ${error}` }
         } else {
             console.log('Email sent:', info.response);
+        }
+    });
+
+    const responseRequest = {
+        from: process.env.EMAIL,
+        to: emailInfo.email,
+        subject: 'Seu email foi enviado, já te respondo :)',
+        html: `<h2>Olá, tudo bem com você?</h2>
+               <p>Esse aqui é um email automático, só pra te avisar que já já vou responder o email que você me enviou, ok? :) </p>       
+               <p>Att, Lucas Martins Oliveira</p>
+            `
+    };
+
+    await transport.sendMail(responseRequest, (error, info) => {
+        if (error) {
+          console.error('Error sending email:', error);
+          throw { type: "Bad Request", message: `Erro: ${error}` }
         }
     });
 }
