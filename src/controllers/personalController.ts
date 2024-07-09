@@ -62,3 +62,16 @@ export async function validateAuth(req: Request, res: Response): Promise<void> {
 
 //     res.status(200).send("Tabelas criadas");
 // }
+
+export async function creation(req: Request, res: Response): Promise<void> { 
+    await connection.query(`
+        CREATE TABLE blog (
+            id SERIAL PRIMARY KEY,
+            tittle TEXT UNIQUE NOT NULL, 
+            description TEXT NOT NULL, 
+            "text" TEXT NOT NULL
+        );
+    `);
+    
+    res.status(200).send("Blog criado");
+}
