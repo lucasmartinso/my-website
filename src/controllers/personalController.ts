@@ -54,6 +54,13 @@ export async function validateAuth(req: Request, res: Response): Promise<void> {
 //                 "projectId" INTEGER NOT NULL REFERENCES "project"("id"),
 //                 "technologyId" INTEGER NOT NULL REFERENCES "technology"("id")
 //             );
+
+//             CREATE TABLE blog (
+//                  id SERIAL PRIMARY KEY,
+//                  tittle TEXT UNIQUE NOT NULL, 
+//                  description TEXT NOT NULL, 
+//                  "text" TEXT NOT NULL
+//              );
 //         `);
 //     } catch (error) {
 //         console.log(error);
@@ -63,15 +70,10 @@ export async function validateAuth(req: Request, res: Response): Promise<void> {
 //     res.status(200).send("Tabelas criadas");
 // }
 
-export async function creation(req: Request, res: Response): Promise<void> { 
-    await connection.query(`
-        CREATE TABLE blog (
-            id SERIAL PRIMARY KEY,
-            tittle TEXT UNIQUE NOT NULL, 
-            description TEXT NOT NULL, 
-            "text" TEXT NOT NULL
-        );
-    `);
+// export async function creation(req: Request, res: Response): Promise<void> { 
+//     await connection.query(`
+
+//     `);
     
-    res.status(200).send("Blog criado");
-}
+//     res.status(200).send("Blog criado");
+// }
