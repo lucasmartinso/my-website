@@ -9,6 +9,6 @@ const personalRouter = Router();
 personalRouter.post("/email",personalController.sendEmail);
 personalRouter.post("/auth",schemaValidator(personalSchema), personalController.login);
 personalRouter.post("/verify/auth", validateTokenAuth, personalController.validateAuth);
-personalRouter.post("/creation", personalController.creation);
+//personalRouter.post("/creation", personalController.creation);
 
 export default personalRouter;
